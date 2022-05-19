@@ -1,5 +1,5 @@
 import React from 'react';
-import OnboardingScreen from '@screens/onboarding';
+import OnboardingScreen from '@screens/Onboarding';
 const App = () => {
   return <OnboardingScreen />;
 };
