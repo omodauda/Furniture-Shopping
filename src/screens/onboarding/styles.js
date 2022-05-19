@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import COLORS from '@constants/Colors';
 
 const {width} = Dimensions.get('window');
 const IMG_WIDTH = width;
@@ -22,20 +23,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 24,
     marginLeft: TEXT_MARGIN,
+    fontFamily: 'Gelasio-SemiBold',
+    color: COLORS.black3,
   },
   boldText: {
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 30,
+    fontFamily: 'Gelasio-Bold',
     marginTop: 15,
     marginBottom: 35,
     marginLeft: TEXT_MARGIN,
+    color: COLORS.black,
   },
   desc: {
     fontWeight: '400',
     fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
     lineHeight: 35,
     width: DESC_WIDTH,
     marginLeft: DESC_MARGIN,
+    color: COLORS.gray,
   },
 });
 
