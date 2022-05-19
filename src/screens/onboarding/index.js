@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, SafeAreaView, ImageBackground} from 'react-native';
 import styles from './styles';
+import CustomButton from '@components/CustomButton';
 
 export default function OnboardingScreen() {
   return (
@@ -15,6 +16,11 @@ export default function OnboardingScreen() {
           The best simple place where you discover most wonderful furnitures and
           make your home beautiful
         </Text>
+        <CustomButton
+          title="Get Started"
+          btnStyle={styles.button}
+          titleStyle={styles.btnText}
+        />
       </ImageBackground>
     </SafeAreaView>
   );

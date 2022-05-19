@@ -1,12 +1,13 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import COLORS from '@constants/Colors';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const IMG_WIDTH = width;
-const IMG_PAD_TOP = 0.52 * width;
+const IMG_PAD_TOP = 0.24 * height;
 const TEXT_MARGIN = 0.08 * width;
 const DESC_WIDTH = 0.76 * width;
 const DESC_MARGIN = 0.157 * width;
+const BTN_WIDTH = 0.424 * width;
 
 const styles = StyleSheet.create({
   screen: {
@@ -43,6 +44,22 @@ const styles = StyleSheet.create({
     width: DESC_WIDTH,
     marginLeft: DESC_MARGIN,
     color: COLORS.gray,
+    marginBottom: 154,
+  },
+  button: {
+    backgroundColor: COLORS.black,
+    borderRadius: 4,
+    width: BTN_WIDTH,
+    alignSelf: 'center',
+    paddingVertical: 15,
+  },
+  btnText: {
+    fontFamily: 'Gelasio-SemiBold',
+    fontWeight: '600',
+    fontSize: 18,
+    lineHeight: 23,
+    color: COLORS.white,
+    textAlign: 'center',
   },
 });
 
