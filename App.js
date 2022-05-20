@@ -1,7 +1,14 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import OnboardingScreen from '@screens/Onboarding';
+import {NavigationContainer} from '@react-navigation/native';
+import AppNavigator from '@navigations/AppNavigator';
+
 const App = () => {
-  return <OnboardingScreen />;
+  return (
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
+  );
 };
 
 export default App;
