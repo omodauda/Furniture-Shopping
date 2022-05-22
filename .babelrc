@@ -8,7 +8,8 @@
           "@components": "./src/components",
           "@constants": "./src/constants",
           "@screens": "./src/screens",
-          "@navigations": "./src/navigations"
+          "@navigations": "./src/navigations",
+          "@validations": "./src/validations"
         }
       }]
     ]
