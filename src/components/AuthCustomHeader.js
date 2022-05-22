@@ -6,9 +6,9 @@ const {width} = Dimensions.get('screen');
 const LINE_WIDTH = 0.28 * width;
 const IMG_WIDTH = 0.17 * width;
 
-export default function AuthCustomHeader() {
+export default function AuthCustomHeader({style}) {
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, style]}>
       <View style={styles.line} />
       <Image
         style={styles.logo}
