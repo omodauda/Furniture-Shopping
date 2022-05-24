@@ -3,7 +3,7 @@ import {Text, SafeAreaView, ImageBackground} from 'react-native';
 import styles from './styles';
 import CustomButton from '@components/CustomButton';
 
-export default function OnboardingScreen() {
+export default function OnboardingScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screen}>
       <ImageBackground
@@ -20,6 +20,7 @@ export default function OnboardingScreen() {
           title="Get Started"
           btnStyle={styles.button}
           titleStyle={styles.btnText}
+          handlePress={() => navigation.navigate('Login')}
         />
       </ImageBackground>
     </SafeAreaView>
