@@ -89,7 +89,7 @@ export default function LoginScreen({navigation}) {
                   handlePress={handleSubmit}
                   disabled={!isValid ? true : false}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
                   <Text style={[styles.buttonText, styles.link]}>SIGN UP</Text>
                 </TouchableOpacity>
               </>
