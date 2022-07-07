@@ -27,6 +27,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Gelasio-Bold',
     fontWeight: '700',
   },
+  wrapper: {
+    marginRight: 25,
+    alignItems: 'center',
+  },
+  list: {
+    paddingHorizontal: 20,
+  },
+  item: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginBottom: 5,
+  },
+  scrollLabel: {
+    fontFamily: 'NunitoSans-SemiBold',
+    fontWeight: '600',
+    fontSize: 14,
+  },
 });
 
 export default styles;
