@@ -66,6 +66,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  bag: {
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.black3,
+    opacity: 0.4,
+    borderRadius: 8,
+    position: 'absolute',
+    left: 123,
+    bottom: 10,
+  },
   name: {
     fontFamily: 'NunitoSans-Regular',
     fontWeight: '400',

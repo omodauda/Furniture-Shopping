@@ -18,6 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const {width, height} = Dimensions.get('window');
 
@@ -134,6 +135,9 @@ export default function HomeScreen({navigation}) {
             style={[styles.image, {height: IMG_HEIGHT}]}
             resizeMode="cover"
           />
+          <TouchableOpacity style={styles.bag}>
+            <Fontisto name="shopping-bag" size={16} color={ITEM_ICON_COLOR} />
+          </TouchableOpacity>
         </View>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.price}>$ {item.price}.00</Text>
