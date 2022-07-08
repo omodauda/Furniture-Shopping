@@ -9,7 +9,8 @@
           "@constants": "./src/constants",
           "@screens": "./src/screens",
           "@navigations": "./src/navigations",
-          "@validations": "./src/validations"
+          "@validations": "./src/validations",
+          "@data": "./src/data"
         }
       }]
     ]
