@@ -8,6 +8,9 @@ const COLORS = {
   black: '#303030',
   black3: '#606060',
   shadowColor: 'rgba(138, 149, 158, 0.2)',
+  brown: '#B4916C',
+  lightBrown: '#E4CBAD',
+  gold: '#F2C94C',
 };
 
 export default COLORS;
