@@ -4,10 +4,13 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  Image,
+  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
+import PRODUCTS from '@data/products';
 
 // icons
 import Feather from 'react-native-vector-icons/Feather';
@@ -16,9 +19,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const {width, height} = Dimensions.get('window');
+
 const ICON_SIZE = 20;
 const ICON_COLOR = COLORS.gray;
 const ITEM_ICON_COLOR = COLORS.white;
+const PRODUCT_WIDTH = 0.42 * width;
+const PRODUCT_HEIGHT = 0.31 * height;
+const IMG_HEIGHT = 0.24 * height;
 
 const DATA = [
   {
@@ -76,6 +84,14 @@ const DATA = [
 export default function HomeScreen({navigation}) {
   const [selectedId, setSelectedId] = useState('1');
 
+  const selectedCategory = DATA.find(
+    category => selectedId === category.id,
+  ).title;
+
+  const CATALOG = PRODUCTS.find(
+    product => product.category === selectedCategory,
+  ).list;
+
   const handleItemPress = itemId => {
     setSelectedId(itemId);
   };
@@ -99,6 +115,32 @@ export default function HomeScreen({navigation}) {
       </TouchableOpacity>
     );
   };
+
+  const handleProductPress = productId => {
+    console.log(productId);
+  };
+
+  const productList = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => handleProductPress(item.id)}
+        style={[
+          styles.productView,
+          {width: PRODUCT_WIDTH, height: PRODUCT_HEIGHT},
+        ]}>
+        <View style={[styles.imageContainer]}>
+          <Image
+            source={item.image}
+            style={[styles.image, {height: IMG_HEIGHT}]}
+            resizeMode="cover"
+          />
+        </View>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.price}>$ {item.price}.00</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
@@ -122,6 +164,15 @@ export default function HomeScreen({navigation}) {
           extraData={selectedId}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      <View style={styles.productList}>
+        <FlatList
+          data={CATALOG}
+          renderItem={productList}
+          key={item => item.id}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </SafeAreaView>

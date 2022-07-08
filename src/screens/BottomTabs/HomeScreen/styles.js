@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 15,
     marginBottom: 20,
   },
   headerText: {
@@ -22,10 +22,12 @@ const styles = StyleSheet.create({
   headerTextThin: {
     fontFamily: 'Gelasio-Regular',
     fontWeight: '400',
+    color: COLORS.gray2,
   },
   headerTextBold: {
     fontFamily: 'Gelasio-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
+    color: COLORS.black,
   },
   wrapper: {
     marginRight: 25,
@@ -46,6 +48,37 @@ const styles = StyleSheet.create({
     fontFamily: 'NunitoSans-SemiBold',
     fontWeight: '600',
     fontSize: 14,
+  },
+  productList: {
+    flex: 1,
+    marginTop: 20,
+    paddingHorizontal: 10,
+  },
+  productView: {
+    marginVertical: 8,
+    marginHorizontal: 10,
+  },
+  imageContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  name: {
+    fontFamily: 'NunitoSans-Regular',
+    fontWeight: '400',
+    fontSize: 14,
+    color: COLORS.black3,
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  price: {
+    fontFamily: 'NunitoSans-Bold',
+    fontWeight: '600',
+    fontSize: 14,
+    color: COLORS.black,
   },
 });
 
