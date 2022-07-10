@@ -136,7 +136,7 @@ export default function HomeScreen({navigation}) {
           <Image
             source={item.image}
             style={[styles.image, {height: IMG_HEIGHT}]}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <TouchableOpacity style={styles.bag}>
             <Fontisto name="shopping-bag" size={16} color={ITEM_ICON_COLOR} />

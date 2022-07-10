@@ -75,7 +75,7 @@ export default function ProductScreen({route, navigation}) {
           source={item.image}
           style={styles.image}
           resizeMethod="scale"
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
       <TouchableOpacity
