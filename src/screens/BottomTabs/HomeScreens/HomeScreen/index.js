@@ -150,7 +150,7 @@ export default function HomeScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <TabCustomHeader>
+      <TabCustomHeader navigation={navigation}>
         <View>
           <Text style={[styles.headerText, styles.headerTextThin]}>
             Make home

@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get('screen');
 const IMG_WIDTH = 0.26 * width;
 const IMG_HEIGHT = 0.12 * height;
 
-export default function FavouriteScreen() {
+export default function FavouriteScreen({navigation}) {
   const favProducts = PRODUCTS.find(product => product.category === 'Popular').list;
 
   const renderItem = ({item}) => (
@@ -41,7 +41,7 @@ export default function FavouriteScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <TabCustomHeader>
+      <TabCustomHeader navigation={navigation}>
         <Text style={styles.headerText}>FAVOURITE</Text>
       </TabCustomHeader>
       <FlatList
