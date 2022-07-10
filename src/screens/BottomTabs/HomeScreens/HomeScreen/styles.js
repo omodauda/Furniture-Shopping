@@ -6,14 +6,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
   },
-  header: {
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 20,
-  },
   headerText: {
     fontSize: 18,
     lineHeight: 25,

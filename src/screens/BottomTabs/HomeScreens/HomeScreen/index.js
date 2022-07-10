@@ -10,6 +10,7 @@ import {
 import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
+import TabCustomHeader from '@components/TabCustomHeader';
 import PRODUCTS from '@data/products';
 
 // icons
@@ -23,7 +24,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 const {width, height} = Dimensions.get('window');
 
 const ICON_SIZE = 20;
-const ICON_COLOR = COLORS.gray;
 const ITEM_ICON_COLOR = COLORS.white;
 const PRODUCT_WIDTH = 0.42 * width;
 const PRODUCT_HEIGHT = 0.31 * height;
@@ -150,8 +150,7 @@ export default function HomeScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <Feather name="search" color={ICON_COLOR} size={ICON_SIZE} />
+      <TabCustomHeader>
         <View>
           <Text style={[styles.headerText, styles.headerTextThin]}>
             Make home
@@ -160,8 +159,7 @@ export default function HomeScreen({navigation}) {
             BEAUTIFUL
           </Text>
         </View>
-        <Feather name="shopping-cart" color={ICON_COLOR} size={ICON_SIZE} />
-      </View>
+      </TabCustomHeader>
       <View>
         <FlatList
           contentContainerStyle={styles.list}
