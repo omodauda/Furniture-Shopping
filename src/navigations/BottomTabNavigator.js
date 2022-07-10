@@ -7,7 +7,7 @@ import COLORS from '@constants/Colors';
 // icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import Feather from 'react-native-vector-icons/Feather';
+import Octicons from 'react-native-vector-icons/Octicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // screens
@@ -41,8 +41,8 @@ const HomeTab = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name="ios-home" color={color} size={23} />
+          tabBarIcon: ({focused, color, size=23}) => (
+            <Ionicons name={focused ? "ios-home" : "ios-home-outline"} color={color} size={size} />
           ),
         }}
       />
@@ -51,7 +51,7 @@ const HomeTab = () => {
         component={FavouriteScreen}
         options={{
           tabBarIcon: ({focused, color, size = ICON_SIZE}) => (
-            <Fontisto name="bookmark" color={color} size={size} />
+            <Fontisto name={focused ? "bookmark-alt": "bookmark"} color={color} size={size} />
           ),
         }}
       />
@@ -60,7 +60,7 @@ const HomeTab = () => {
         component={NotificationScreen}
         options={{
           tabBarIcon: ({focused, color, size = ICON_SIZE}) => (
-            <Feather name="bell" color={color} size={size} />
+            <Octicons name={focused ? "bell-fill": "bell"} color={color} size={size} />
           ),
         }}
       />
@@ -69,7 +69,7 @@ const HomeTab = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({focused, color, size = ICON_SIZE}) => (
-            <FontAwesome name="user-o" color={color} size={size} />
+            <FontAwesome name={focused ? "user" : "user-o"} color={color} size={size} />
           ),
         }}
       />
