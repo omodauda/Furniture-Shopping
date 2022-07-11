@@ -14,6 +14,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // Home stack
 import HomeScreen from '@screens/BottomTabs/HomeScreens/HomeScreen';
 import ProductScreen from '@screens/BottomTabs/HomeScreens/ProductScreen';
+import CartScreen from '@screens/BottomTabs/HomeScreens/CartScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -86,6 +87,7 @@ export default function BottomTabNavigator() {
       }}>
       <Stack.Screen name="HomeTab" component={HomeTab} />
       <Stack.Screen name="Product" component={ProductScreen} />
+      <Stack.Screen name="Cart" component={CartScreen} />
     </Stack.Navigator>
   );
 }
