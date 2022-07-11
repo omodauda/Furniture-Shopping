@@ -11,6 +11,7 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import PRODUCTS from '@data/products';
 import CustomButton from '@components/CustomButton';
+import CustomUnitControl from '@components/CustomUnitControl';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -45,24 +46,11 @@ const PALLETE = [
 export default function ProductScreen({route, navigation}) {
   const {productId, selectedCategory} = route.params;
 
-  const [unit, setUnit] = useState(1);
-
   const item = PRODUCTS.find(
     product => product.category === selectedCategory,
   ).list.find(ware => ware.id === productId);
 
   const isAvailable = item.units > 0 ? true : false;
-
-  const handleIncreaseBtnPress = () => {
-    setUnit(unit + 1);
-  };
-
-  const handleDecreaseBtnPress = () => {
-    if (unit > 1) {
-      setUnit(unit - 1);
-    }
-    return;
-  };
 
   return (
     <SafeAreaView>
@@ -112,19 +100,7 @@ export default function ProductScreen({route, navigation}) {
         <Text style={styles.nameText}>{item.name}</Text>
         <View style={styles.row}>
           <Text style={styles.price}>$ {item.price}</Text>
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => handleIncreaseBtnPress()}>
-              <Entypo name="plus" size={20} color={COLORS.gray} />
-            </TouchableOpacity>
-            <Text style={styles.unit}>{unit}</Text>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => handleDecreaseBtnPress()}>
-              <Entypo name="minus" size={20} color={COLORS.gray} />
-            </TouchableOpacity>
-          </View>
+          <CustomUnitControl style={styles.row} />
         </View>
         <View style={styles.ratings}>
           <MaterialIcons name="star" size={20} color={COLORS.gold} />

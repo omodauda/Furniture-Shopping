@@ -82,33 +82,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  btn: {
-    width: 30,
-    height: 30,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.blurGray,
-    elevation: 1,
-    shadowColor: '#8A959E',
-    shadowOffset: {
-      width: 2,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 0.2,
-  },
   price: {
     fontFamily: 'NunitoSans-Bold',
     fontWeight: '700',
     fontSize: 30,
-  },
-  unit: {
-    fontFamily: 'NunitoSans-SemiBold',
-    fontWeight: '600',
-    fontSize: 18,
-    color: COLORS.black,
-    marginHorizontal: 15,
   },
   ratings: {
     flexDirection: 'row',
