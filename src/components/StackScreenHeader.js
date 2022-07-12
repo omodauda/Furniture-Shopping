@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: 'Gelasio-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 16,
     color: COLORS.black,
   }
