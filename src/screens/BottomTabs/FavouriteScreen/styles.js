@@ -9,11 +9,12 @@ const styles = StyleSheet.create({
     },
     headerText: {
       fontFamily: 'Gelasio-Bold',
-      fontWeight: '700',
+      fontWeight: '600',
       fontSize: 16,
       color: COLORS.black
     },
     list: {
+      flex: 1,
       paddingHorizontal: 20,
     },
     product: {
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     },
     price: {
       fontFamily: 'NunitoSans-Bold',
-      fontWeight: '700',
+      fontWeight: '600',
       fontSize: 16,
       color: COLORS.black
     },
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       borderRadius: 8,
       position: 'absolute',
-      bottom: 40,
+      bottom: 20,
     },
     btnText: {
       fontFamily: 'NunitoSans-SemiBold',
