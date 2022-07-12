@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
   },
   price: {
     fontFamily: 'NunitoSans-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 30,
+    color: COLORS.black
   },
   ratings: {
     flexDirection: 'row',
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontFamily: 'NunitoSans-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 18,
     color: COLORS.black,
     marginLeft: 10,
