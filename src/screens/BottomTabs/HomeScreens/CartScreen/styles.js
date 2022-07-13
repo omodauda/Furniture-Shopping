@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 20,
-    flex: 1,
+    flex: 0.95,
   },
   product: {
     flexDirection: 'row',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontFamily: 'NunitoSans-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 16,
     color: COLORS.black
   },
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   totalText: {
     fontFamily: 'NunitoSans-Bold',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 20,
   },
   btn: {
