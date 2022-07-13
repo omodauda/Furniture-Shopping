@@ -18,7 +18,10 @@ const IMG_HEIGHT = 0.12 * height;
 export default function CartScreen({navigation}) {
   const DATA = PRODUCTS.find(product => product.category === 'Table').list;
 
-
+  const handleSubmit = () => {
+    navigation.navigate('CheckOut');
+  }
+  
   const renderItem = ({item}) => (
     <View style={styles.product}>
       <View style={styles.row}>
@@ -63,7 +66,12 @@ export default function CartScreen({navigation}) {
         <Text style={[styles.totalText, {color: COLORS.gray}]}>Total:</Text>
         <Text style={[styles.totalText, {color: COLORS.black}]}>$ 95.00</Text>
       </View>
-      <CustomButton title="CHECK OUT" btnStyle={styles.btn} titleStyle={styles.btnText} />
+      <CustomButton
+        title="CHECK OUT"
+        btnStyle={styles.btn}
+        titleStyle={styles.btnText}
+        handlePress={handleSubmit}
+      />
     </SafeAreaView>
   )
 }
