@@ -14,6 +14,10 @@ export default function CheckOutScreen({navigation}) {
   const address = shippingAddresses[0].address;
   const card = paymentMethods[0].cardNo;
 
+  const handleSubmit = () => {
+    navigation.navigate('Success');
+  }
+
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="CHECK-OUT" />
@@ -80,6 +84,7 @@ export default function CheckOutScreen({navigation}) {
         title="SUBMIT ORDER"
         btnStyle={styles.btn}
         titleStyle={styles.btnText}
+        handlePress={handleSubmit}
       />
     </SafeAreaView>
   )

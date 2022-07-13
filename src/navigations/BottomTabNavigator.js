@@ -11,11 +11,13 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // screens
+
 // Home stack
 import HomeScreen from '@screens/BottomTabs/HomeScreens/HomeScreen';
 import ProductScreen from '@screens/BottomTabs/HomeScreens/ProductScreen';
 import CartScreen from '@screens/BottomTabs/HomeScreens/CartScreen';
 import CheckOutScreen from '@screens/BottomTabs/HomeScreens/CheckOutScreen';
+import SuccessScreen from '@screens/BottomTabs/HomeScreens/SuccessScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -31,7 +33,7 @@ const Stack = createStackNavigator();
 const HomeTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeStack"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -40,7 +42,7 @@ const HomeTab = () => {
         tabBarInactiveTintColor: COLORS.gray4,
       }}>
       <Tab.Screen
-        name="Home"
+        name="HomeStack"
         component={HomeScreen}
         options={{
           tabBarIcon: ({focused, color, size=23}) => (
@@ -86,10 +88,11 @@ export default function BottomTabNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="HomeTab" component={HomeTab} />
+      <Stack.Screen name="Home" component={HomeTab} />
       <Stack.Screen name="Product" component={ProductScreen} />
       <Stack.Screen name="Cart" component={CartScreen} />
       <Stack.Screen name="CheckOut" component={CheckOutScreen} />
+      <Stack.Screen name="Success" component={SuccessScreen} />
     </Stack.Navigator>
   );
 }
