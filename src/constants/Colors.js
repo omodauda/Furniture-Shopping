@@ -12,7 +12,8 @@ const COLORS = {
   lightBrown: '#E4CBAD',
   gold: '#F2C94C',
   blackGray: '#C4C4C4',
-  green: '#2CAE60'
+  green: '#2CAE60',
+  red: '#EB5757'
 };
 
 export default COLORS;
