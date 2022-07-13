@@ -1,5 +1,5 @@
-const user = {
-  name: 'Bruno Pham',
+const USER = {
+  name: 'Bruno Fernandes',
   email: 'bruno203@gmail.com',
   image: '',
   orders: [],
@@ -24,7 +24,7 @@ const user = {
     {
       id: '1',
       cardType: 'MasterCard',
-      cardNo: '1111 2222 3333 3947',
+      cardNo: '**** **** **** 3947',
       cardHolderName: 'Jennyfer Doe',
       expirtDate: '05/23',
       isDefault: true,
@@ -32,7 +32,7 @@ const user = {
     {
       id: '2',
       cardType: 'MasterCard',
-      cardNo: '1111 2222 3333 3947',
+      cardNo: '**** **** **** 3947',
       cardHolderName: 'Jennyfer Doe',
       expirtDate: '05/23',
       isDefault: false,
@@ -69,4 +69,4 @@ const user = {
   ],
 };
 
-export default user;
+export default USER;
