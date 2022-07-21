@@ -22,7 +22,7 @@ import ReviewScreen from '@screens/BottomTabs/HomeScreens/ReviewScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
-import ProfileScreen from '@screens/BottomTabs/ProfileScreen';
+import ProfileScreen from '@screens/BottomTabs/ProfileScreens/ProfileScreen';
 
 const {width, height} = Dimensions.get('window');
 const ICON_SIZE = 0.042 * width;
