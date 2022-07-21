@@ -48,6 +48,7 @@ export default function NotificationScreen() {
         data={NOTIFICATIONS}
         keyExtractor={item => item.id}
         renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
