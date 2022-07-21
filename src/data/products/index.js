@@ -16,14 +16,16 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -42,21 +44,32 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Tracy Mosby',
-            rating: '5',
+            image: require('@assets/images/users/user2.jpg'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '3',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
+            review:
+              'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
+          },
+          {
+            id: '4',
+            user: 'Selena Gomez',
+            image: require('@assets/images/users/user3.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -75,7 +88,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -94,14 +108,16 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Tracy Mosby',
-            rating: '5',
+            image: require('@assets/images/users/user2.jpg'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -120,7 +136,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -145,7 +162,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -170,21 +188,24 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Tracy Mosby',
-            rating: '5',
+            image: require('@assets/images/users/user2.jpg'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '3',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -203,14 +224,16 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Tracy Mosby',
-            rating: '5',
+            image: require('@assets/images/users/user3.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -229,14 +252,16 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -255,7 +280,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -280,7 +306,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -305,7 +332,8 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Busayo Elegbede',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -330,14 +358,16 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
@@ -356,21 +386,24 @@ const PRODUCTS = [
           {
             id: '1',
             user: 'Bruno Fernandes',
-            rating: '5',
+            image: require('@assets/images/users/user1.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '2',
             user: 'Tracy Mosby',
-            rating: '5',
+            image: require('@assets/images/users/user3.png'),
+            rating: 5,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
           {
             id: '3',
             user: 'Busayo Elegbede',
-            rating: '4',
+            image: require('@assets/images/users/user1.png'),
+            rating: 4,
             review:
               'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
           },
