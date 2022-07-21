@@ -18,6 +18,7 @@ import ProductScreen from '@screens/BottomTabs/HomeScreens/ProductScreen';
 import CartScreen from '@screens/BottomTabs/HomeScreens/CartScreen';
 import CheckOutScreen from '@screens/BottomTabs/HomeScreens/CheckOutScreen';
 import SuccessScreen from '@screens/BottomTabs/HomeScreens/SuccessScreen';
+import ReviewScreen from '@screens/BottomTabs/HomeScreens/ReviewScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -90,6 +91,7 @@ export default function BottomTabNavigator() {
       }}>
       <Stack.Screen name="Home" component={HomeTab} />
       <Stack.Screen name="Product" component={ProductScreen} />
+      <Stack.Screen name="Review" component={ReviewScreen} />
       <Stack.Screen name="Cart" component={CartScreen} />
       <Stack.Screen name="CheckOut" component={CheckOutScreen} />
       <Stack.Screen name="Success" component={SuccessScreen} />

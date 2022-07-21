@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import PRODUCTS from '@data/products';
@@ -14,7 +14,6 @@ import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const {width, height} = Dimensions.get('screen');
@@ -102,11 +101,14 @@ export default function ProductScreen({route, navigation}) {
           <Text style={styles.price}>$ {item.price}</Text>
           <CustomUnitControl style={styles.row} />
         </View>
-        <View style={styles.ratings}>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Review', {productId: productId, productCategory: selectedCategory})}
+          style={styles.ratings}
+        >
           <MaterialIcons name="star" size={20} color={COLORS.gold} />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.review}>({item.reviews.length} reviews)</Text>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.descText}>{item.description}</Text>
       </View>
       <View style={styles.footer}>
