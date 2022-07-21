@@ -1,7 +1,7 @@
 const USER = {
   name: 'Bruno Fernandes',
   email: 'bruno203@gmail.com',
-  image: '',
+  image: require('@assets/images/users/user1.png'),
   orders: [],
   shippingAddresses: [
     {
