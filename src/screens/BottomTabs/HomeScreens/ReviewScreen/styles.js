@@ -64,12 +64,14 @@ const styles = StyleSheet.create({
 	},
   userImgContainer: {
     backgroundColor: 'red',
-    position: 'absolute'
-  },
-  userImg: {
     position: 'absolute',
     left: 148,
-    bottom: 140
+    bottom: 185,
+    overflow: 'hidden'
+  },
+  userImg: {
+    width: '100%',
+    height: '100%'
   },
   rowHeader: {
     flexDirection: 'row',
