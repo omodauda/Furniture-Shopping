@@ -13,6 +13,7 @@ const COLORS = {
   gold: '#F2C94C',
   blackGray: '#C4C4C4',
   green: '#2CAE60',
+  green2: '#27AE60',
   red: '#EB5757'
 };
 
