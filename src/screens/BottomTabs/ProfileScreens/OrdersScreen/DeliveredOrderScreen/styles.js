@@ -4,7 +4,8 @@ import COLORS from '@constants/Colors'
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		backgroundColor: COLORS.blurGray
+		backgroundColor: COLORS.white,
+		paddingTop: 25
 	}
 })
 
