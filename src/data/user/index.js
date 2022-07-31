@@ -2,7 +2,36 @@ const USER = {
   name: 'Bruno Fernandes',
   email: 'bruno203@gmail.com',
   image: require('@assets/images/users/user1.png'),
-  orders: [],
+  orders: [
+    {
+      id: '1',
+      orderNo: '238562312',
+      date: '20/03/2020',
+      quantity: 3,
+      totalAmount: 150
+    },
+    {
+      id: '2',
+      orderNo: '238562312',
+      date: '20/03/2020',
+      quantity: 3,
+      totalAmount: 150
+    },
+    {
+      id: '3',
+      orderNo: '238562312',
+      date: '20/03/2020',
+      quantity: 3,
+      totalAmount: 150
+    },
+    {
+      id: '4',
+      orderNo: '238562312',
+      date: '20/03/2020',
+      quantity: 3,
+      totalAmount: 150
+    }
+  ],
   shippingAddresses: [
     {
       id: '1',
