@@ -38,7 +38,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>My orders</Text>
             <Text style={styles.label}>Already have {orders.length} orders</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('MyOrders')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>

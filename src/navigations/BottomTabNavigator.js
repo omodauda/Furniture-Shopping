@@ -20,9 +20,12 @@ import CheckOutScreen from '@screens/BottomTabs/HomeScreens/CheckOutScreen';
 import SuccessScreen from '@screens/BottomTabs/HomeScreens/SuccessScreen';
 import ReviewScreen from '@screens/BottomTabs/HomeScreens/ReviewScreen';
 
+// Profile stack
+import ProfileScreen from '@screens/BottomTabs/ProfileScreens/ProfileScreen';
+import MyOrdersScreen from '@screens/BottomTabs/ProfileScreens/OrdersScreen/MyOrdersScreen';
+
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
-import ProfileScreen from '@screens/BottomTabs/ProfileScreens/ProfileScreen';
 
 const {width, height} = Dimensions.get('window');
 const ICON_SIZE = 0.042 * width;
@@ -30,6 +33,19 @@ const TAB_HEIGHT = 0.092 * height;
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <Stack.Screen name='Profile' component={ProfileScreen} />
+      <Stack.Screen name='MyOrders' component={MyOrdersScreen} />
+    </Stack.Navigator>
+  )
+}
 
 const HomeTab = () => {
   return (
@@ -70,8 +86,8 @@ const HomeTab = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarIcon: ({focused, color, size = ICON_SIZE}) => (
             <FontAwesome name={focused ? "user" : "user-o"} color={color} size={size} />
