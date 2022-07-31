@@ -20,10 +20,6 @@ export default function ReviewScreen({route, navigation}) {
 
   const renderItem = ({item}) => {
     const {rating: userRating, review, user, image} = item;
-    const stars = [];
-    for (let index = 0; index < userRating; index++) {
-      stars.push('star')
-    }
     return (
       <View style={styles.review}>
         <View style={[styles.userImgContainer, {width: USR_IMG_WIDTH, height:USR_IMG_WIDTH, borderRadius: USR_IMG_WIDTH/2}]}>
@@ -35,11 +31,9 @@ export default function ReviewScreen({route, navigation}) {
         </View>
         <View style={[styles.row, {marginTop: 5, marginBottom: 15}]}>
         {
-          stars.map((star, index) => {
-            return (
-              <MaterialIcons key={index} name="star" size={25} color={COLORS.gold} />
-            )
-          })
+          [...Array(userRating).keys()].map((_, index) => (
+            <MaterialIcons key={index} name="star" size={25} color={COLORS.gold} />
+          ))
         }
         </View>
         <Text style={styles.reviewText}>{review}</Text>
