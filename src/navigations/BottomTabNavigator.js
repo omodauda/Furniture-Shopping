@@ -23,6 +23,7 @@ import ReviewScreen from '@screens/BottomTabs/HomeScreens/ReviewScreen';
 // Profile stack
 import ProfileScreen from '@screens/BottomTabs/ProfileScreens/ProfileScreen';
 import MyOrdersScreen from '@screens/BottomTabs/ProfileScreens/OrdersScreen/MyOrdersScreen';
+import ShippingAddresses from '@screens/BottomTabs/ProfileScreens/ShippingAddress';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -43,6 +44,7 @@ const ProfileStack = () => {
     >
       <Stack.Screen name='Profile' component={ProfileScreen} />
       <Stack.Screen name='MyOrders' component={MyOrdersScreen} />
+      <Stack.Screen name='ShippingAddresses' component={ShippingAddresses} />
     </Stack.Navigator>
   )
 }

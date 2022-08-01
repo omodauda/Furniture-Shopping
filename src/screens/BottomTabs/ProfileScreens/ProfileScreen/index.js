@@ -47,7 +47,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>shipping Addresses</Text>
             <Text style={styles.label}>{shippingAddresses.length} Addresses</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ShippingAddresses')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
