@@ -44,7 +44,6 @@ const ProfileStack = () => {
     >
       <Stack.Screen name='Profile' component={ProfileScreen} />
       <Stack.Screen name='MyOrders' component={MyOrdersScreen} />
-      <Stack.Screen name='ShippingAddresses' component={ShippingAddresses} />
     </Stack.Navigator>
   )
 }
@@ -113,6 +112,7 @@ export default function BottomTabNavigator() {
       <Stack.Screen name="Cart" component={CartScreen} />
       <Stack.Screen name="CheckOut" component={CheckOutScreen} />
       <Stack.Screen name="Success" component={SuccessScreen} />
+      <Stack.Screen name='ShippingAddresses' component={ShippingAddresses} />
     </Stack.Navigator>
   );
 }
