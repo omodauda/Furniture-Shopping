@@ -7,14 +7,14 @@ const COLORS = {
   blurGray: '#F0F0F0',
   black: '#303030',
   black3: '#606060',
-  shadowColor: 'rgba(138, 149, 158, 0.2)',
   brown: '#B4916C',
   lightBrown: '#E4CBAD',
   gold: '#F2C94C',
   blackGray: '#C4C4C4',
   green: '#2CAE60',
   green2: '#27AE60',
-  red: '#EB5757'
+  red: '#EB5757',
+  shadow: '#8A959E'
 };
 
 export default COLORS;
