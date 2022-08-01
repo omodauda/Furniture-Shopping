@@ -57,7 +57,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>Payment Methods</Text>
             <Text style={styles.label}>You have {paymentMethods.length} cards</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('PaymentMethod')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>

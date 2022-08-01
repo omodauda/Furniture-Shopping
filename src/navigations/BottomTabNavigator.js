@@ -24,6 +24,7 @@ import ReviewScreen from '@screens/BottomTabs/HomeScreens/ReviewScreen';
 import ProfileScreen from '@screens/BottomTabs/ProfileScreens/ProfileScreen';
 import MyOrdersScreen from '@screens/BottomTabs/ProfileScreens/OrdersScreen/MyOrdersScreen';
 import ShippingAddressesScreen from '@screens/BottomTabs/ProfileScreens/ShippingAddressScreen';
+import PaymentMethodScreen from '@screens/BottomTabs/ProfileScreens/PaymentMethodScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -113,6 +114,7 @@ export default function BottomTabNavigator() {
       <Stack.Screen name="CheckOut" component={CheckOutScreen} />
       <Stack.Screen name="Success" component={SuccessScreen} />
       <Stack.Screen name='ShippingAddresses' component={ShippingAddressesScreen} />
+      <Stack.Screen name='PaymentMethod' component={PaymentMethodScreen} />
     </Stack.Navigator>
   );
 }
