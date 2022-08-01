@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingHorizontal: 20,
+    shadowOffset: {
+			width: 0,
+			height: 8
+		},
+		shadowColor: COLORS.shadow,
+		shadowOpacity: 0.2,
+		shadowRadius: 40
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -22,6 +29,7 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 10,
     marginBottom: 30,
+    borderRadius: 8
   },
   topCard: {
     backgroundColor: COLORS.white,
@@ -33,7 +41,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderBottomWidth: 2,
     borderColor: COLORS.blurGray,
-    zIndex: 2,
   },
   name: {
     fontFamily: 'NunitoSans-Bold',
@@ -50,6 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: COLORS.blurGray,
     minHeight: 54,
+    backgroundColor: COLORS.white
   },
   address: {
     fontFamily: 'NunitoSans-Regular',
@@ -90,10 +98,16 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
-    borderColor: COLORS.blurGray,
-    borderWidth: 0.5,
+    backgroundColor: COLORS.white,
     marginTop: 18,
-    marginBottom: 25
+    marginBottom: 25,
+    shadowOffset: {
+			width: 0,
+			height: 8
+		},
+		shadowColor: COLORS.shadow,
+		shadowOpacity: 0.2,
+		shadowRadius: 40
   },
   label: {
     fontFamily: 'NunitoSans-Regular',
@@ -112,7 +126,14 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     paddingVertical: 17,
-    borderRadius: 8
+    borderRadius: 8,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10
   },
   btnText: {
     color: COLORS.white,
