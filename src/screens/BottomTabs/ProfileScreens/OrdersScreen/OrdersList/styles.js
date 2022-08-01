@@ -6,10 +6,17 @@ const styles = StyleSheet.create({
 		backgroundColor: COLORS.white,
 		borderRadius: 8,
 		borderWidth: 1,
-		borderColor: COLORS.blurGray,
+		borderColor: COLORS.white,
 		paddingTop: 15,
 		paddingBottom: 20,
-		marginVertical: 13
+		marginVertical: 13,
+		shadowOffset: {
+			width: 0,
+			height: 8
+		},
+		shadowColor: COLORS.shadow,
+		shadowOpacity: 0.2,
+		shadowRadius: 40
 	},
 	texts: {
 		flexDirection: 'row',
