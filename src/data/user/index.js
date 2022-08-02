@@ -72,7 +72,8 @@ const USER = {
       id: '1',
       productName: 'Coffee Table',
       price: 50.0,
-      myRating: '5',
+      image: require('@assets/images/products/coffee-table.png'),
+      myRating: 5,
       date: '20/03/2020',
       review:
         'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
@@ -81,7 +82,8 @@ const USER = {
       id: '2',
       productName: 'Coffee Table',
       price: 50.0,
-      myRating: '5',
+      image: require('@assets/images/products/coffee-table.png'),
+      myRating: 5,
       date: '20/03/2020',
       review:
         'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
@@ -90,7 +92,8 @@ const USER = {
       id: '3',
       productName: 'Coffee Table',
       price: 50.0,
-      myRating: '5',
+      image: require('@assets/images/products/coffee-table.png'),
+      myRating: 5,
       date: '20/03/2020',
       review:
         'Nice furniture with good delivery. The delivery time is very fast. Then product look like exactly the picture in the app. Besides color is also the same and quality is very good despite very cheap price.',
