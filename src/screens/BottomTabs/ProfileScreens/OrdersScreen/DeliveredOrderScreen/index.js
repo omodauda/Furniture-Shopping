@@ -10,7 +10,7 @@ export default function DeliveredOrderScreen() {
   const {orders} = USER;
   return (
     <View style={styles.screen}>
-      <OrdersList data={orders} />
+      <OrdersList data={orders} status='Delivered' />
     </View>
   )
 }

@@ -8,7 +8,7 @@ export default function ProcessingOrderScreen() {
   const {orders} = USER;
   return (
     <View style={styles.screen}>
-      <OrdersList data={orders} />
+      <OrdersList data={orders} status='Processing' />
     </View>
   )
 }

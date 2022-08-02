@@ -1,12 +1,18 @@
 import React from 'react';
 import {FlatList, View, Text, TouchableOpacity, Dimensions} from 'react-native'
 import styles from './styles';
+import COLORS from '@constants/Colors';
 
 const {width} = Dimensions.get('screen')
 
 const ITEM_WIDTH = 0.89 * width
 
-export default function OrdersList({data}) {
+export default function OrdersList({data, status}) {
+
+  const statusTextColor = 
+    status === 'Delivered' ? COLORS.green2 : 
+    status === 'Canceled' ? COLORS.red : 
+    status === 'Processing' && COLORS.gold;
 
 	const renderItem = ({item}) => {
     const {orderNo, date, quantity, totalAmount} = item;
@@ -29,7 +35,7 @@ export default function OrdersList({data}) {
           <TouchableOpacity style={styles.btn}>
             <Text style={styles.btnText}>Detail</Text>
           </TouchableOpacity>
-          <Text style={styles.statusText}>Delivered</Text>
+          <Text style={[styles.statusText, {color: statusTextColor}]}>{status}</Text>
         </View>
       </View>
     )
