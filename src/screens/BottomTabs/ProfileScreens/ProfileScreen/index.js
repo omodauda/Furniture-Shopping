@@ -77,7 +77,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>Setting</Text>
             <Text style={styles.label}>Notification, Password, FAQ, Contact</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
