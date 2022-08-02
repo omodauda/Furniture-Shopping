@@ -67,7 +67,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>My reviews</Text>
             <Text style={styles.label}>Reviews for {reviews.length} items</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('MyReviews')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
