@@ -61,7 +61,10 @@ export default function ShippingAddresses({navigation}) {
 				renderItem={renderItem}
 				showsVerticalScrollIndicator={false}
 			/>
-			<TouchableOpacity style={styles.addBtn}>
+			<TouchableOpacity
+				style={styles.addBtn}
+				onPress={() => navigation.navigate('AddShippingAddress')}
+			>
 				<AntDesign name='plus' size={34} color={COLORS.black} />
 			</TouchableOpacity>
     </SafeAreaView>
