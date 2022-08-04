@@ -28,6 +28,7 @@ import PaymentMethodScreen from '@screens/BottomTabs/ProfileScreens/PaymentMetho
 import MyReviewsScreen from '@screens/BottomTabs/ProfileScreens/MyReviewsScreen';
 import SettingScreen from '@screens/BottomTabs/ProfileScreens/SettingScreen';
 import AddShippingAddressScreen from '@screens/BottomTabs/ProfileScreens/AddShippingAddressScreen';
+import AddPaymentMethodScreen from '@screens/BottomTabs/ProfileScreens/AddPaymentMethodScreen';
 
 import FavouriteScreen from '@screens/BottomTabs/FavouriteScreen';
 import NotificationScreen from '@screens/BottomTabs/NotificationScreen';
@@ -121,6 +122,7 @@ export default function BottomTabNavigator() {
       <Stack.Screen name="MyReviews" component={MyReviewsScreen}/>
       <Stack.Screen name="Setting" component={SettingScreen}/>
       <Stack.Screen name='AddShippingAddress' component={AddShippingAddressScreen} />
+      <Stack.Screen name="AddPaymentMethod" component={AddPaymentMethodScreen} />
     </Stack.Navigator>
   );
 }

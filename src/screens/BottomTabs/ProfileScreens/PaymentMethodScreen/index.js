@@ -53,7 +53,7 @@ export default function PaymentMethodScreen({navigation}) {
 				renderItem={renderItem}
 				showsVerticalScrollIndicator={false}
 			/>
-			<TouchableOpacity style={styles.addBtn}>
+			<TouchableOpacity onPress={() => navigation.navigate('AddPaymentMethod')} style={styles.addBtn}>
 				<AntDesign name='plus' size={34} color={COLORS.black} />
 			</TouchableOpacity>
     </SafeAreaView>
