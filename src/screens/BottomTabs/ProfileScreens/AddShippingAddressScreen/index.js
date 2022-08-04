@@ -8,6 +8,8 @@ import {Formik, Field} from 'formik'
 import COLORS from '@constants/Colors'
 import axios from 'axios'
 import {addShippingAddressValidationSchema} from '@validations/AddShippingAddressValidation'
+import CountryModal from '@components/CountryModal'
+import CitiesModal from '@components/CitiesModal'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -17,21 +19,47 @@ export default function AddShippingAddressScreen({navigation}) {
 		city: null
 	});
 
-	const fetchCountries = async () => {
-		const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
-		const data = response.data.data
-		const countries = {};
-		data.forEach((d, index) => {
-			countries[index] = d.country
-		});
-		console.log(countries)
-	}
+	const [isModalVisible, setIsModalVisible] = useState(false)
+	const [isCityModalVisible, setIsCityModalVisible] = useState(false)
+
+	const [countries, setCountries] = useState([]);
+	const [cities, setCities] = useState([]);
 
 	useEffect(() => {
+		const fetchCountries = async () => {
+			const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
+			const data = response.data.data
+			const _data = []
+			data.forEach((d, index) => {
+				_data.push({id : index, name: d.country})
+			});
+			setCountries(_data)
+		}
 		fetchCountries();
 	}, []);
 
+	useEffect(() => {
+		const fetchCities = async() => {
+			const country = locationData.country
+			console.log(country)
+			const response = await axios.post('https://countriesnow.space/api/v0.1/countries/cities', {
+				country: country
+			})
+			const data = response.data.data
+			setCities(data)
+		}
+		fetchCities()
+	}, [locationData.country])
+
 	const isValidLocationData = (locationData.city && locationData.country) !== null;
+
+	const dismissModal = () => {
+		setIsModalVisible(!isModalVisible)
+	}
+
+	const dismissCityModal = () => {
+		setIsCityModalVisible(!isCityModalVisible)
+	}
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -44,7 +72,7 @@ export default function AddShippingAddressScreen({navigation}) {
 						address: '',
 						postalCode: '',
 					}}
-					onSubmit={values => console.log({...values})}
+					onSubmit={values => console.log({...values, ...locationData})}
 				>
 					{({handleSubmit, isValid, errors, touched}) => (
 						<>
@@ -98,24 +126,47 @@ export default function AddShippingAddressScreen({navigation}) {
                   <Text style={styles.errorText}>{errors.postalCode}</Text>
                 )}
               </View>
-							<TouchableOpacity style={[styles.dropDown, styles.formControl]}>
+							<CountryModal
+								visibility={isModalVisible}
+								dismiss={dismissModal}
+								data={countries}
+								field="country"
+								setLocationData={setLocationData}
+							/>
+							<TouchableOpacity onPress={() => dismissModal()} style={[styles.dropDown, styles.formControl]}>
 								<View>
 									<Text style={styles.label}>Country</Text>
-									<Text style={styles.inputText}>Select Country</Text>
+									<Text style={styles.inputText}>
+										{
+											locationData.country !== null ? locationData.country : 'Select Country'
+										}
+									</Text>
 								</View>
 								<AntDesign name='down' size={23} color={COLORS.black} />
 							</TouchableOpacity>
-							<TouchableOpacity style={[styles.dropDown, styles.formControl]}>
+							
+							<CitiesModal
+								visibility={isCityModalVisible}
+								dismiss={dismissCityModal}
+								data={cities}
+								field="city"
+								setLocationData={setLocationData}
+							/>
+							<TouchableOpacity onPress={() => dismissCityModal()} style={[styles.dropDown, styles.formControl]}>
 								<View>
 									<Text style={styles.label}>City</Text>
-									<Text style={styles.inputText}>Select City</Text>
+									<Text style={styles.inputText}>
+										{
+											locationData.city !== null ? locationData.city : 'Select City'
+										}
+									</Text>
 								</View>
 								<AntDesign name='down' size={23} color={COLORS.black} />
 							</TouchableOpacity>
 							<CustomButton
 								title="SAVE ADDRESS"
 								titleStyle={styles.btnText}
-								disabled={!isValid ? true : false}
+								disabled={isValid && isValidLocationData ? false : true}
 								btnStyle={[
 									styles.btn,
 									{
