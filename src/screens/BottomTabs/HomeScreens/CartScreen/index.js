@@ -3,9 +3,9 @@ import React from 'react'
 import styles from './styles'
 import COLORS from '@constants/Colors';
 import StackScreenHeader from '@components/StackScreenHeader';
-import PRODUCTS from '@data/products';
 import CustomUnitControl from '@components/CustomUnitControl';
 import CustomButton from '@components/CustomButton';
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -15,7 +15,8 @@ const {width, height} = Dimensions.get('screen');
 const IMG_WIDTH = 0.26 * width;
 const IMG_HEIGHT = 0.12 * height;
 
-export default function CartScreen({navigation}) {
+export default function CartScreen({ navigation }) {
+  const {products: PRODUCTS, total} = useSelector(state => state.cart)
   const DATA = PRODUCTS.find(product => product.category === 'Table').list;
 
   const handleSubmit = () => {
@@ -64,7 +65,7 @@ export default function CartScreen({navigation}) {
       </View>
       <View style={styles.total}>
         <Text style={[styles.totalText, {color: COLORS.gray}]}>Total:</Text>
-        <Text style={[styles.totalText, {color: COLORS.black}]}>$ 95.00</Text>
+        <Text style={[styles.totalText, {color: COLORS.black}]}>$ {total}.00</Text>
       </View>
       <CustomButton
         title="CHECK OUT"
