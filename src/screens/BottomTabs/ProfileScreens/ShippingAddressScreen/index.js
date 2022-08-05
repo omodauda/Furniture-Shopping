@@ -3,11 +3,12 @@ import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
 import COLORS from '@constants/Colors'
-import USER from '@data/user';
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export default function ShippingAddresses({navigation}) {
+	const USER = useSelector(state => state.user)
   const {name, shippingAddresses} = USER;
 	const [defaultAddress, setDefaultAddress] = useState('1');
 
