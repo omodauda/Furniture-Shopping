@@ -2,12 +2,13 @@ import { View, Text, SafeAreaView, Image, TouchableOpacity, FlatList } from 'rea
 import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
-import USER from '@data/user';
 import COLORS from '@constants/Colors';
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-export default function PaymentMethodScreen({navigation}) {
+export default function PaymentMethodScreen({ navigation }) {
+  const USER = useSelector(state => state.user)
 	const {paymentMethods} = USER;
 	const [defaultPaymentMethod, setDefaultPaymentMethod] = useState('1');
 
