@@ -11,10 +11,9 @@ import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import TabCustomHeader from '@components/TabCustomHeader';
-import PRODUCTS from '@data/products';
+import {useSelector} from 'react-redux'
 
 // icons
-import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -83,6 +82,7 @@ const DATA = [
 ];
 
 export default function HomeScreen({navigation}) {
+  const PRODUCTS = useSelector(state => state.products)
   const [selectedId, setSelectedId] = useState('1');
 
   const selectedCategory = DATA.find(
