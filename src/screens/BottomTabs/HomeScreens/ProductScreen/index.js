@@ -9,9 +9,9 @@ import {
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import PRODUCTS from '@data/products';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
+import {useSelector} from 'react-redux'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -44,6 +44,7 @@ const PALLETE = [
 
 export default function ProductScreen({route, navigation}) {
   const {productId, selectedCategory} = route.params;
+  const PRODUCTS = useSelector(state => state.products)
 
   const item = PRODUCTS.find(
     product => product.category === selectedCategory,
