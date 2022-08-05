@@ -2,7 +2,7 @@ import {View, Text, SafeAreaView, Image, Dimensions, TouchableOpacity} from 'rea
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import USER from '@data/user';
+import {useSelector} from 'react-redux'
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,6 +14,7 @@ const ICON_SIZE = 24;
 const ICON_COLOR = COLORS.black3;
 
 export default function ProfileScreen({navigation}) {
+  const USER = useSelector(state => state.user)
   const {name, email, image, orders, shippingAddresses, paymentMethods, reviews} = USER;
   return (
     <SafeAreaView style={styles.screen}>
