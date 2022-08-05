@@ -8,7 +8,8 @@
           "@screens/*": ["src/screens/*"],
           "@navigations/*": ["src/navigations/*"],
           "@validations/*": ["src/validations/*"],
-          "@data/*": ["src/data/*"]
+          "@data/*": ["src/data/*"],
+          "@store/*": ["src/store/*"]
         }
     }
 }  
