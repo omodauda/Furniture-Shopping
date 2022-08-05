@@ -2,9 +2,9 @@ import {View, Text, SafeAreaView, FlatList, Image, TouchableOpacity, Dimensions}
 import React from 'react';
 import styles from './styles';
 import TabCustomHeader from '@components/TabCustomHeader';
-import PRODUCTS from '@data/products';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -14,7 +14,8 @@ const {width, height} = Dimensions.get('screen');
 const IMG_WIDTH = 0.26 * width;
 const IMG_HEIGHT = 0.12 * height;
 
-export default function FavouriteScreen({navigation}) {
+export default function FavouriteScreen({ navigation }) {
+  const PRODUCTS = useSelector(state => state.favourite)
   const favProducts = PRODUCTS.find(product => product.category === 'Popular').list;
 
   const renderItem = ({item}) => (
