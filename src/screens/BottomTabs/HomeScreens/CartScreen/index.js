@@ -6,7 +6,7 @@ import StackScreenHeader from '@components/StackScreenHeader';
 import CustomUnitControl from '@components/CustomUnitControl';
 import CustomButton from '@components/CustomButton';
 import { useSelector, useDispatch } from 'react-redux'
-import {reduceItemQty, increaseItemQty} from '@store/slices/cart'
+import {reduceItemQty, increaseItemQty, removeFromCart} from '@store/slices/cart'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -36,6 +36,11 @@ export default function CartScreen({ navigation }) {
     const { category, id, unitPrice, totalPrice } = item
     dispatch(increaseItemQty({category, productId: id, unitPrice, totalPrice}))
   }
+
+  const handleRemoveItem = item => {
+    const { category, id } = item
+    dispatch(removeFromCart({category, productId: id}))
+  }
   
   const renderItem = ({item}) => (
     <View style={styles.product}>
@@ -54,7 +59,7 @@ export default function CartScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleRemoveItem(item)}>
           <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
         </TouchableOpacity>
         <Text style={styles.price}>$ {item.totalPrice}.00</Text>
