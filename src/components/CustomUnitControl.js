@@ -1,34 +1,23 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import React from 'react'
 import COLORS from '@constants/Colors';
 
 import Entypo from 'react-native-vector-icons/Entypo'
 
-export default function CustomUnitControl({style}) {
-  const [unit, setUnit] = useState(1);
-
-  const handleIncreaseBtnPress = () => {
-    setUnit(unit + 1);
-  };
-
-  const handleDecreaseBtnPress = () => {
-    if (unit > 1) {
-      setUnit(unit - 1);
-    }
-    return;
-  };
-
+export default function CustomUnitControl({style, qty, handleIncrease, handleDecrease}) {
+  
   return (
     <View style={style}>
       <TouchableOpacity
           style={styles.btn}
-          onPress={() => handleIncreaseBtnPress()}>
+          onPress={handleIncrease}>
           <Entypo name="plus" size={20} color={COLORS.gray} />
       </TouchableOpacity>
-      <Text style={styles.unit}>{unit}</Text>
+      <Text style={styles.unit}>{qty}</Text>
       <TouchableOpacity
+          disabled={qty < 2 ? true : false}
           style={styles.btn}
-          onPress={() => handleDecreaseBtnPress()}>
+          onPress={handleDecrease}>
           <Entypo name="minus" size={20} color={COLORS.gray} />
       </TouchableOpacity>
     </View>
