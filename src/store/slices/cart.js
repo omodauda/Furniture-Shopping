@@ -16,7 +16,11 @@ export const cartSlice = createSlice({
         product => product.category === category
       ).list.find(p => p.id === productId)
       const { id, image, name, price } = item
-      // item alrd in cart ? increase count
+      const productIndex = state.products.findIndex(product => product.category === category && product.id === productId)
+      const existingProduct = state.products[productIndex]
+      if (existingProduct) {
+        return
+      }
       const newItem = {
         category,
         id,
