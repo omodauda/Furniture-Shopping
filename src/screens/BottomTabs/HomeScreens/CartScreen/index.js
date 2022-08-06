@@ -5,7 +5,8 @@ import COLORS from '@constants/Colors';
 import StackScreenHeader from '@components/StackScreenHeader';
 import CustomUnitControl from '@components/CustomUnitControl';
 import CustomButton from '@components/CustomButton';
-import {useSelector} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import {reduceItemQty, increaseItemQty} from '@store/slices/cart'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -18,10 +19,22 @@ const IMG_HEIGHT = 0.12 * height;
 
 export default function CartScreen({ navigation }) {
   const { products: DATA, total } = useSelector(state => state.cart)
-  // const DATA = PRODUCTS.find(product => product.category === 'Table').list;
+  
   const isEmptyCart = DATA.length < 1 ? true : false;
   const handleSubmit = () => {
     navigation.navigate('CheckOut');
+  }
+
+  const dispatch = useDispatch()
+
+  const handleDecrease = item => {
+    const { category, id, unitPrice, totalPrice } = item
+    dispatch(reduceItemQty({category, productId: id, unitPrice, totalPrice}))
+  }
+
+  const handleIncrease = item => {
+    const { category, id, unitPrice, totalPrice } = item
+    dispatch(increaseItemQty({category, productId: id, unitPrice, totalPrice}))
   }
   
   const renderItem = ({item}) => (
@@ -32,14 +45,19 @@ export default function CartScreen({ navigation }) {
         </View>
         <View style={styles.details}>
           <Text style={styles.name}>{item.name}</Text>
-          <CustomUnitControl style={styles.split} />
+          <CustomUnitControl
+            qty={item.quantity}
+            style={styles.split}
+            handleDecrease={() => handleDecrease(item)}
+            handleIncrease={() => handleIncrease(item)}
+          />
         </View>
       </View>
       <View style={styles.icons}>
         <TouchableOpacity>
           <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
         </TouchableOpacity>
-        <Text style={styles.price}>$ {item.price}.00</Text>
+        <Text style={styles.price}>$ {item.totalPrice}.00</Text>
       </View>
     </View>
   );
