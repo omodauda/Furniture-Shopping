@@ -21,9 +21,22 @@ export const userSlice = createSlice({
       state.name = name;
       state.email = email;
       state.password = password;
+    },
+    addShippingAddress: (state, action) => {
+      console.log(action)
+      const { fullName, address, country, city, postalCode } = action.payload;
+      const newAddress = {
+        id: state.shippingAddresses.length + 1,
+        fullName,
+        address,
+        country,
+        city,
+        postalCode
+      }
+      state.shippingAddresses.push(newAddress)
     }
   }
 })
 
-export const {signUp} = userSlice.actions
+export const {signUp, addShippingAddress} = userSlice.actions
 export default userSlice.reducer
