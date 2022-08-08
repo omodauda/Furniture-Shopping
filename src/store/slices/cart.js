@@ -3,7 +3,7 @@ import PRODUCTS from '@data/products'
 
 const initialState = {
   products: [],
-  total: 95
+  total: 0
 }
 
 export const cartSlice = createSlice({
@@ -31,6 +31,7 @@ export const cartSlice = createSlice({
         totalPrice: price * quantity
       }
       state.products.push(newItem)
+      state.total += price * quantity
     },
     reduceItemQty: (state, action) => {
       const { category, productId, unitPrice, totalPrice } = action.payload
@@ -38,7 +39,7 @@ export const cartSlice = createSlice({
       const item = state.products[productIndex]
       item.quantity -= 1
       item.totalPrice = totalPrice - unitPrice
-
+      state.total -= unitPrice
     },
     increaseItemQty: (state, action) => {
       const { category, productId, unitPrice, totalPrice } = action.payload
@@ -46,11 +47,14 @@ export const cartSlice = createSlice({
       const item = state.products[productIndex]
       item.quantity += 1
       item.totalPrice = totalPrice + unitPrice
+      state.total += unitPrice
     },
     removeFromCart: (state, action) => {
       const { category, productId } = action.payload
       const productIndex = state.products.findIndex(product => product.category === category && product.id === productId)
-      state.products.splice(productIndex)
+      const item = state.products[productIndex]
+      state.total -= item.totalPrice
+      state.products.splice(productIndex, 1)
     }
   }
 })
