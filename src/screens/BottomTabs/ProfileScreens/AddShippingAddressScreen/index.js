@@ -10,6 +10,8 @@ import axios from 'axios'
 import {addShippingAddressValidationSchema} from '@validations/AddShippingAddressValidation'
 import CountryModal from '@components/CountryModal'
 import CitiesModal from '@components/CitiesModal'
+import { useDispatch } from 'react-redux'
+import {addShippingAddress} from '@store/slices/user'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -58,7 +60,14 @@ export default function AddShippingAddressScreen({navigation}) {
 
 	const dismissCityModal = () => {
 		setIsCityModalVisible(!isCityModalVisible)
-	}
+  }
+  
+  const dispatch = useDispatch()
+  const handleAddAddress = values => {
+    const { fullName, address, country, city, postalCode} = values;
+    dispatch(addShippingAddress({ fullName, address, country, city, postalCode }));
+    navigation.navigate('hippingAddresses')
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -71,7 +80,7 @@ export default function AddShippingAddressScreen({navigation}) {
 						address: '',
 						postalCode: '',
 					}}
-					onSubmit={values => console.log({...values, ...locationData})}
+					onSubmit={values => handleAddAddress({...values, ...locationData})}
 				>
 					{({handleSubmit, isValid, errors, touched}) => (
 						<>

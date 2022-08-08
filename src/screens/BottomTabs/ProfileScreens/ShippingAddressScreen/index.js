@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default function ShippingAddresses({navigation}) {
 	const USER = useSelector(state => state.user)
-  const {name, shippingAddresses} = USER;
+  const {shippingAddresses} = USER;
 	const [defaultAddress, setDefaultAddress] = useState('1');
 
 	const handlePress = (id) => {
@@ -20,7 +20,7 @@ export default function ShippingAddresses({navigation}) {
   const isEmptyList = shippingAddresses.length < 1 ? true : false;
 
 	const renderItem = ({item}) => {
-		const {address} = item;
+		const {fullName, address, country, city, postalCode} = item;
 		const isDefaultAddress = item.id === defaultAddress;
 		return (
 			<View style={styles.section}>
@@ -44,13 +44,13 @@ export default function ShippingAddresses({navigation}) {
         </View>
         <View style={styles.card}>
           <View style={styles.topCard}>
-            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.name}>{fullName}</Text>
             <TouchableOpacity>
                 <AntDesign name="edit" size={24} color={COLORS.gray} />
             </TouchableOpacity>
           </View>
           <View style={styles.bottomCard}>
-            <Text style={styles.address}>{address}</Text>
+            <Text style={styles.address}>{address}, {city}, {postalCode}, {country}</Text>
           </View>
         </View>
       </View>
