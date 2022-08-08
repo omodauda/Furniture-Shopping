@@ -3,8 +3,8 @@ import * as yup from 'yup';
 export const signupValidationSchema = yup.object().shape({
   name: yup
     .string()
-    .min(5, ({min}) => `*Name must be at least ${min} characters`)
-    .required('*Name is required'),
+    .matches(/(\w.+\s).+/, 'Enter at least 2 names')
+    .required('*Full name is required'),
   email: yup
     .string()
     .email('*Please enter a valid email address')
