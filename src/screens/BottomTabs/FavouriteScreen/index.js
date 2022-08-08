@@ -4,7 +4,8 @@ import styles from './styles';
 import TabCustomHeader from '@components/TabCustomHeader';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import {removeFromFav} from '@store/slices/favourite'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -19,6 +20,11 @@ export default function FavouriteScreen({ navigation }) {
   const favProducts = useSelector(state => state.favourite)
   const isEmpty = favProducts.length < 1 ? true : false;
 
+  const dispatch = useDispatch()
+  const handleRemoveItem = item => {
+    const { category, id } = item;
+    dispatch(removeFromFav({category, productId: id}))
+  }
   const renderItem = ({item}) => (
     <View style={styles.product}>
       <View style={styles.row}>
@@ -31,7 +37,9 @@ export default function FavouriteScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleRemoveItem(item)}
+        >
           <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
         </TouchableOpacity>
         <TouchableOpacity
