@@ -6,7 +6,9 @@ import {Formik, Field} from 'formik';
 import CustomTextInput from '@components/CustomTextInput';
 import CustomButton from '@components/CustomButton';
 import COLORS from '@constants/Colors';
-import {signupValidationSchema} from '@validations/SignupValidation';
+import { signupValidationSchema } from '@validations/SignupValidation';
+import { useDispatch } from 'react-redux';
+import { signUp} from '@store/slices/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -14,6 +16,13 @@ export default function SignupScreen({navigation}) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
+  
+  const dispatch = useDispatch()
+  const handleSignUp = values => {
+    const { name, email, password } = values;
+    dispatch(signUp({ name, email, password }));
+    navigation.navigate('Main')
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -32,7 +41,7 @@ export default function SignupScreen({navigation}) {
             password: '',
             confirmPassword: '',
           }}
-          onSubmit={values => console.log({...values})}>
+          onSubmit={values => handleSignUp({...values})}>
           {({handleSubmit, isValid, errors, touched}) => (
             <>
               <View style={styles.formControl}>
