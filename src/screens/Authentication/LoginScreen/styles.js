@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     shadowColor: COLORS.shadowColor,
     shadowOffset: {
-      width: 5,
-      height: 5,
+      width: 0,
+      height: 7,
     },
-    shadowOpacity: 2,
-    elevation: 5,
-    zIndex: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 10,
   },
   formControl: {
     flexDirection: 'row',
