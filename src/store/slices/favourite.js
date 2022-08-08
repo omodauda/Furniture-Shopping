@@ -11,7 +11,7 @@ export const favouriteSlice = createSlice({
       const { category, productId } = action.payload;
       const item = PRODUCTS.find(
         product => product.category === category
-      ).list.find(P => P.id === productId);
+      ).list.find(p => p.id === productId);
       const { id, name, image, price } = item;
       const productIndex = state.findIndex(product => product.category === category && product.id === productId)
       const existingProduct = state[productIndex]
@@ -24,9 +24,14 @@ export const favouriteSlice = createSlice({
         price
       }
       state.push(newItem)
+    },
+    removeFromFav: (state, action) => {
+      const { category, productId } = action.payload;
+      const productIndex = state.findIndex(product => product.category === category && product.id === productId)
+      state.splice(productIndex, 1)
     }
   }
 })
 
-export const {addToFav} = favouriteSlice.actions
+export const {addToFav, removeFromFav} = favouriteSlice.actions
 export default favouriteSlice.reducer
