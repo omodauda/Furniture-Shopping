@@ -41,7 +41,6 @@ export default function AddShippingAddressScreen({navigation}) {
 	useEffect(() => {
 		const fetchCities = async() => {
 			const country = locationData.country
-			console.log(country)
 			const response = await axios.post('https://countriesnow.space/api/v0.1/countries/cities', {
 				country: country
 			})
