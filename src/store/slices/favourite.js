@@ -34,7 +34,7 @@ export const favouriteSlice = createSlice({
       const productIndex = state.favouriteProducts.findIndex(
         product => product.category === category && product.id === productId,
       );
-      state.splice(productIndex, 1);
+      state.favouriteProducts.splice(productIndex, 1);
     },
   },
 });
