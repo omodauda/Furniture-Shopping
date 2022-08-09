@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit';
 // import USER from '@data/user'
 
 const initialState = {
@@ -9,34 +9,44 @@ const initialState = {
   orders: [],
   shippingAddresses: [],
   paymentMethods: [],
-  reviews: []
+  reviews: [],
 };
 
 export const userSlice = createSlice({
   name: 'user',
-	initialState,
+  initialState,
   reducers: {
     signUp: (state, action) => {
-      const { name, email, password } = action.payload;
+      const {name, email, password} = action.payload;
       state.name = name;
       state.email = email;
       state.password = password;
     },
     addShippingAddress: (state, action) => {
-      console.log(action)
-      const { fullName, address, country, city, postalCode } = action.payload;
+      const {fullName, address, country, city, postalCode} = action.payload;
       const newAddress = {
         id: state.shippingAddresses.length + 1,
         fullName,
         address,
         country,
         city,
-        postalCode
-      }
-      state.shippingAddresses.push(newAddress)
-    }
-  }
-})
+        postalCode,
+      };
+      state.shippingAddresses.push(newAddress);
+    },
+    addPaymentMethod: (state, action) => {
+      const {name, cardNumber, cvv, expDate} = action.payload;
+      const newPaymentMethod = {
+        id: state.shippingAddresses.length + 1,
+        name,
+        cardNumber,
+        cvv,
+        expDate,
+      };
+      state.paymentMethods.push(newPaymentMethod);
+    },
+  },
+});
 
-export const {signUp, addShippingAddress} = userSlice.actions
-export default userSlice.reducer
+export const {signUp, addShippingAddress, addPaymentMethod} = userSlice.actions;
+export default userSlice.reducer;
