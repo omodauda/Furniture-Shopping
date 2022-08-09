@@ -15,7 +15,7 @@ export default function AddPaymentMethodScreen({navigation}) {
   const handleAddPaymentMethod = values => {
     const {name, cardNumber, cvv, expDate} = values;
     dispatch(addPaymentMethod({name, cardNumber, cvv, expDate}));
-    navigation.navigate('PaymentMethod');
+    navigation.goBack();
   };
 
   return (
