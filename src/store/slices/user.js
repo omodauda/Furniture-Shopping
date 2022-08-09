@@ -1,10 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-// import USER from '@data/user'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  name: '',
-  email: '',
-  password: '',
+  name: null,
+  email: null,
   image: require('@assets/images/users/user1.png'),
   orders: [],
   shippingAddresses: [],
@@ -17,10 +16,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     signUp: (state, action) => {
-      const {name, email, password} = action.payload;
+      const {name, email} = action.payload;
       state.name = name;
       state.email = email;
-      state.password = password;
     },
     addShippingAddress: (state, action) => {
       const {fullName, address, country, city, postalCode} = action.payload;
