@@ -1,8 +1,15 @@
-import {View, Text, SafeAreaView, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,18 +21,38 @@ const ICON_SIZE = 24;
 const ICON_COLOR = COLORS.black3;
 
 export default function ProfileScreen({navigation}) {
-  const USER = useSelector(state => state.user)
-  const {name, email, image, orders, shippingAddresses, paymentMethods, reviews} = USER;
+  const USER = useSelector(state => state.user);
+  const {
+    name,
+    email,
+    image,
+    orders,
+    shippingAddresses,
+    paymentMethods,
+    reviews,
+  } = USER;
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <Feather name="search" color={ICON_COLOR} size={ICON_SIZE} />
         <Text style={styles.headerText}>PROFILE</Text>
-        <MaterialCommunityIcons name="logout" color={ICON_COLOR} size={ICON_SIZE} />
+        <MaterialCommunityIcons
+          name="logout"
+          color={ICON_COLOR}
+          size={ICON_SIZE}
+        />
       </View>
       <View style={styles.main}>
         <View style={styles.userInfo}>
-          <View style={[styles.imgContainer, {width: IMG_WIDTH, height:IMG_WIDTH, borderRadius: IMG_WIDTH/2}]}>
+          <View
+            style={[
+              styles.imgContainer,
+              {
+                width: IMG_WIDTH,
+                height: IMG_WIDTH,
+                borderRadius: IMG_WIDTH / 2,
+              },
+            ]}>
             <Image style={styles.image} source={image} resizeMode="cover" />
           </View>
           <View>
@@ -37,7 +64,10 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>My orders</Text>
-            <Text style={styles.label}>Already have {orders.length} orders</Text>
+            <Text style={styles.label}>
+              Already have {orders.length}{' '}
+              {paymentMethods.length < 2 ? 'order' : 'orders'}
+            </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyOrders')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
@@ -46,9 +76,13 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>shipping Addresses</Text>
-            <Text style={styles.label}>{shippingAddresses.length} Addresses</Text>
+            <Text style={styles.label}>
+              {shippingAddresses.length}{' '}
+              {shippingAddresses.length < 2 ? 'Address' : 'Addresses'}
+            </Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('ShippingAddresses')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ShippingAddresses')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
@@ -56,9 +90,13 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>Payment Methods</Text>
-            <Text style={styles.label}>You have {paymentMethods.length} cards</Text>
+            <Text style={styles.label}>
+              You have {paymentMethods.length}{' '}
+              {paymentMethods.length < 2 ? 'card' : 'cards'}
+            </Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('PaymentMethod')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PaymentMethod')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
@@ -66,7 +104,10 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>My reviews</Text>
-            <Text style={styles.label}>Reviews for {reviews.length} items</Text>
+            <Text style={styles.label}>
+              Reviews for {reviews.length}{' '}
+              {reviews.length < 2 ? 'item' : 'items'}
+            </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyReviews')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
@@ -76,13 +117,14 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>Setting</Text>
-            <Text style={styles.label}>Notification, Password, FAQ, Contact</Text>
+            <Text style={styles.label}>
+              Notification, Password, FAQ, Contact
+            </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
         </View>
-
       </View>
     </SafeAreaView>
   );
