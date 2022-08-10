@@ -66,7 +66,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>My orders</Text>
             <Text style={styles.label}>
               Already have {orders.length}{' '}
-              {paymentMethods.length < 2 ? 'order' : 'orders'}
+              {orders.length > 1 ? 'orders' : 'order'}
             </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyOrders')}>
@@ -78,7 +78,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>shipping Addresses</Text>
             <Text style={styles.label}>
               {shippingAddresses.length}{' '}
-              {shippingAddresses.length < 2 ? 'Address' : 'Addresses'}
+              {shippingAddresses.length > 1 ? 'Addresses' : 'Address'}
             </Text>
           </View>
           <TouchableOpacity
@@ -92,7 +92,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>Payment Methods</Text>
             <Text style={styles.label}>
               You have {paymentMethods.length}{' '}
-              {paymentMethods.length < 2 ? 'card' : 'cards'}
+              {paymentMethods.length > 1 ? 'cards' : 'card'}
             </Text>
           </View>
           <TouchableOpacity
@@ -106,7 +106,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={styles.boldText}>My reviews</Text>
             <Text style={styles.label}>
               Reviews for {reviews.length}{' '}
-              {reviews.length < 2 ? 'item' : 'items'}
+              {reviews.length > 1 ? 'items' : 'item'}
             </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyReviews')}>
