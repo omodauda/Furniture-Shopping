@@ -4,25 +4,36 @@ import styles from './styles';
 import StackScreenHeader from '@components/StackScreenHeader';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {createOrder} from '@store/slices/user';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 export default function CheckOutScreen({navigation}) {
-  const {total: cartTotal} = useSelector(state => state.cart);
+  const {total: cartTotal, products} = useSelector(state => state.cart);
   const USER = useSelector(state => state.user);
   const {name, shippingAddresses, paymentMethods} = USER;
 
   const {address, city, country, postalCode} = shippingAddresses[0];
   const {cardNumber} = paymentMethods[0];
 
-  const handleSubmit = () => {
-    navigation.navigate('Success');
-  };
-
   const deliveryFee = 5;
   const orderTotal = cartTotal + deliveryFee;
+
+  const dispatch = useDispatch();
+  const handleSubmit = () => {
+    dispatch(
+      createOrder({
+        address: `${address}, ${city}, ${postalCode}, ${country}`,
+        deliveryFee,
+        orderAmount: cartTotal,
+        quantity: products.length,
+        orders: products,
+      }),
+    );
+    navigation.navigate('Success');
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
