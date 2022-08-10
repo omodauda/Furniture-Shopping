@@ -114,7 +114,6 @@ export default function AddShippingAddressScreen({navigation}) {
                   component={CustomTextInput}
                   name="address"
                   placeholder="Ex: 25 Robert Latouche Street"
-                  autoComplete="address"
                   autoCapitalize="none"
                   style={[styles.input, styles.inputText]}
                   placeholderTextColor={COLORS.gray2}
