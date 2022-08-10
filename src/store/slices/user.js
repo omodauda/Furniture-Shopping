@@ -59,7 +59,6 @@ export const userSlice = createSlice({
         orders,
         address,
       };
-      console.log(newOrder);
       state.orders.push(newOrder);
     },
   },
