@@ -6,9 +6,10 @@ import {useSelector} from 'react-redux';
 
 export default function DeliveredOrderScreen() {
   const Orders = useSelector(state => state.user.orders);
+  const data = Orders.filter(order => order.status === 'Delivered');
   return (
     <View style={styles.screen}>
-      <OrdersList data={Orders} status="Delivered" />
+      <OrdersList data={data} status="Delivered" />
     </View>
   );
 }
