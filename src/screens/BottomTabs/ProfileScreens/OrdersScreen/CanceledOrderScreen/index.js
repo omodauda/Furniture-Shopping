@@ -6,9 +6,10 @@ import {useSelector} from 'react-redux';
 
 export default function CanceledOrderScreen() {
   const Orders = useSelector(state => state.user.orders);
+  const data = Orders.filter(order => order.status === 'Canceled');
   return (
     <View style={styles.screen}>
-      <OrdersList data={Orders} status="Canceled" />
+      <OrdersList data={data} status="Canceled" />
     </View>
   );
 }
