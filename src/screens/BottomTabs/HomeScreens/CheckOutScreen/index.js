@@ -6,6 +6,7 @@ import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
 import {createOrder} from '@store/slices/user';
+import {clearCart} from '@store/slices/cart';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -32,6 +33,7 @@ export default function CheckOutScreen({navigation}) {
         orders: products,
       }),
     );
+    dispatch(clearCart());
     navigation.navigate('Success');
   };
 
