@@ -17,7 +17,6 @@ import {removeFromFav, clearFav} from '@store/slices/favourite';
 import {addToCart} from '@store/slices/cart';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -36,12 +35,22 @@ export default function FavouriteScreen({navigation}) {
     dispatch(removeFromFav({category, productId: id}));
   };
 
+  const handleAddToCart = item => {
+    const {category, id: productId} = item;
+    dispatch(addToCart({productId, category, quantity: 1}));
+  };
+
   const handleAddAllToCart = () => {
     favProducts.map(product => {
-      const {category, id} = product;
-      dispatch(addToCart({productId: id, category, quantity: 1}));
+      const {category, id: productId, units} = product;
+      const isOutOfStock = units < 1 ? true : false;
+      dispatch(addToCart({productId, category, quantity: 1}));
+      if (isOutOfStock) {
+        return;
+      } else {
+        dispatch(removeFromFav({category, productId}));
+      }
     });
-    dispatch(clearFav());
   };
 
   const renderItem = ({item}) => {
@@ -73,9 +82,14 @@ export default function FavouriteScreen({navigation}) {
           <TouchableOpacity onPress={() => handleRemoveItem(item)}>
             <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cartIconWrapper}>
-            <Feather name="shopping-cart" color={COLORS.black} size={18} />
-          </TouchableOpacity>
+          {!isOutOfStock && (
+            <TouchableOpacity
+              style={styles.cartIconWrapper}
+              onPress={() => handleAddToCart(item)}
+              disabled={isOutOfStock ? true : false}>
+              <Feather name="shopping-cart" color={COLORS.black} size={18} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
