@@ -19,6 +19,7 @@ import {addToCart} from '@store/slices/cart';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -43,28 +44,42 @@ export default function FavouriteScreen({navigation}) {
     dispatch(clearFav());
   };
 
-  const renderItem = ({item}) => (
-    <View style={styles.product}>
-      <View style={styles.row}>
-        <View
-          style={[styles.imgContainer, {width: IMG_WIDTH, height: IMG_HEIGHT}]}>
-          <Image style={styles.image} source={item.image} resizeMode="cover" />
+  const renderItem = ({item}) => {
+    const {units, image, name, price} = item;
+    const isOutOfStock = units < 1 ? true : false;
+    return (
+      <View style={styles.product}>
+        <View style={styles.row}>
+          <View
+            style={[
+              styles.imgContainer,
+              {width: IMG_WIDTH, height: IMG_HEIGHT},
+            ]}>
+            <Image style={styles.image} source={image} resizeMode="cover" />
+          </View>
+          <View style={styles.details}>
+            <View>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.price}>$ {price}.00</Text>
+            </View>
+            {isOutOfStock && (
+              <Text style={[styles.price, {color: COLORS.red}]}>
+                Out of stock
+              </Text>
+            )}
+          </View>
         </View>
-        <View style={styles.details}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.price}>$ {item.price}.00</Text>
+        <View style={styles.icons}>
+          <TouchableOpacity onPress={() => handleRemoveItem(item)}>
+            <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cartIconWrapper}>
+            <Feather name="shopping-cart" color={COLORS.black} size={18} />
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.icons}>
-        <TouchableOpacity onPress={() => handleRemoveItem(item)}>
-          <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cartIconWrapper}>
-          <Fontisto name="shopping-bag" size={18} color={COLORS.black} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
