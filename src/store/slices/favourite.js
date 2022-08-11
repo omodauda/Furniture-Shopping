@@ -36,8 +36,11 @@ export const favouriteSlice = createSlice({
       );
       state.favouriteProducts.splice(productIndex, 1);
     },
+    clearFav: (state, action) => {
+      state.favouriteProducts = [];
+    },
   },
 });
 
-export const {addToFav, removeFromFav} = favouriteSlice.actions;
+export const {addToFav, removeFromFav, clearFav} = favouriteSlice.actions;
 export default favouriteSlice.reducer;
