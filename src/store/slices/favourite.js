@@ -14,7 +14,7 @@ export const favouriteSlice = createSlice({
       const item = PRODUCTS.find(
         product => product.category === category,
       ).list.find(p => p.id === productId);
-      const {id, name, image, price} = item;
+      const {id, name, image, price, units} = item;
       const productIndex = state.favouriteProducts.findIndex(
         product => product.category === category && product.id === productId,
       );
@@ -26,6 +26,7 @@ export const favouriteSlice = createSlice({
         image,
         name,
         price,
+        units,
       };
       state.favouriteProducts.push(newItem);
     },
