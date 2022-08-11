@@ -2,14 +2,17 @@ import { View, Text, SafeAreaView, Image, TouchableOpacity, FlatList } from 'rea
 import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
-import USER from '@data/user';
 import COLORS from '@constants/Colors';
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-export default function PaymentMethodScreen({navigation}) {
+export default function PaymentMethodScreen({ navigation }) {
+  const USER = useSelector(state => state.user)
 	const {paymentMethods} = USER;
-	const [defaultPaymentMethod, setDefaultPaymentMethod] = useState('1');
+  const [defaultPaymentMethod, setDefaultPaymentMethod] = useState('1');
+  
+  const isEmptyList = paymentMethods.length < 1 ? true : false;
 
 	const renderItem = ({item}) => {
 		const isDefaultPaymentMethod = item.id === defaultPaymentMethod
@@ -47,15 +50,32 @@ export default function PaymentMethodScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="PAYMENT METHOD" />
-			<FlatList
-				data={paymentMethods}
-				keyExtractor={item => item.id}
-				renderItem={renderItem}
-				showsVerticalScrollIndicator={false}
-			/>
-			<TouchableOpacity onPress={() => navigation.navigate('AddPaymentMethod')} style={styles.addBtn}>
-				<AntDesign name='plus' size={34} color={COLORS.black} />
-			</TouchableOpacity>
+      {
+        isEmptyList ?
+        <View style={styles.emptyView}>
+            <Text style={styles.emptyDesc}>
+              Looks like you haven't added any payment method yet
+            </Text>
+            <TouchableOpacity
+              style={styles.addBtn}
+              onPress={() => navigation.navigate('AddPaymentMethod')}
+            >
+              <AntDesign name='plus' size={34} color={COLORS.black} />
+            </TouchableOpacity>
+          </View>
+          :
+          <>
+            <FlatList
+              data={paymentMethods}
+              keyExtractor={item => item.id}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+            />
+            <TouchableOpacity onPress={() => navigation.navigate('AddPaymentMethod')} style={styles.addBtn}>
+              <AntDesign name='plus' size={34} color={COLORS.black} />
+            </TouchableOpacity>
+          </>
+      }
     </SafeAreaView>
   )
 }

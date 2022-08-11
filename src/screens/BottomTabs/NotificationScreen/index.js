@@ -2,7 +2,7 @@ import {View, Text, SafeAreaView, FlatList, Image, TouchableOpacity} from 'react
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import NOTIFICATIONS from '@data/notifications';
+import {useSelector} from 'react-redux'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -10,6 +10,7 @@ const ICON_SIZE = 20;
 const ICON_COLOR = COLORS.gray;
 
 export default function NotificationScreen() {
+  const NOTIFICATIONS = useSelector(state => state.notification)
   const renderItem = ({item}) => {
     const {title, type, isRead, body: {image, text}} = item;
     const haveImage = image !== null && true;

@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, FlatList, Image, Dimensions } from 'react-nat
 import React from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
-import USER from '@data/user'
+import {useSelector} from 'react-redux'
 import COLORS from '@constants/Colors'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +11,8 @@ const {width, height} = Dimensions.get('screen')
 const IMG_WIDTH = 0.19 * width
 const IMG_HEIGHT = 0.086 * height
 
-export default function MyReviewsScreen({navigation}) {
+export default function MyReviewsScreen({ navigation }) {
+  const USER = useSelector(state => state.user)
   const {reviews} = USER;
 
   const renderItem = ({item}) => {

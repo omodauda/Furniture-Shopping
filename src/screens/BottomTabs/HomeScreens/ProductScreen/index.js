@@ -6,12 +6,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import PRODUCTS from '@data/products';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCart} from '@store/slices/cart';
+import {addToFav, removeFromFav} from '@store/slices/favourite';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -44,12 +46,54 @@ const PALLETE = [
 
 export default function ProductScreen({route, navigation}) {
   const {productId, selectedCategory} = route.params;
+  const [qty, setQty] = useState(1);
+
+  const PRODUCTS = useSelector(state => state.products);
+  const favProducts = useSelector(state => state.favourite.favouriteProducts);
 
   const item = PRODUCTS.find(
     product => product.category === selectedCategory,
   ).list.find(ware => ware.id === productId);
 
   const isAvailable = item.units > 0 ? true : false;
+  const isFav = favProducts.find(
+    product =>
+      product.category === selectedCategory && product.id === productId,
+  );
+
+  const handleIncrease = () => {
+    setQty(qty + 1);
+  };
+
+  const handleDecrease = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+    }
+    return;
+  };
+
+  const dispatch = useDispatch();
+  const toggleIsFav = () => {
+    if (isFav) {
+      dispatch(
+        removeFromFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    } else {
+      dispatch(
+        addToFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    }
+  };
+
+  const handleAdd = () => {
+    dispatch(addToCart({productId, category: selectedCategory, quantity: qty}));
+  };
 
   return (
     <SafeAreaView>
@@ -99,12 +143,21 @@ export default function ProductScreen({route, navigation}) {
         <Text style={styles.nameText}>{item.name}</Text>
         <View style={styles.row}>
           <Text style={styles.price}>$ {item.price}</Text>
-          <CustomUnitControl style={styles.row} />
+          <CustomUnitControl
+            style={styles.row}
+            qty={qty}
+            handleIncrease={handleIncrease}
+            handleDecrease={handleDecrease}
+          />
         </View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('Review', {productId: productId, productCategory: selectedCategory})}
-          style={styles.ratings}
-        >
+          onPress={() =>
+            navigation.navigate('Review', {
+              productId: productId,
+              productCategory: selectedCategory,
+            })
+          }
+          style={styles.ratings}>
           <MaterialIcons name="star" size={20} color={COLORS.gold} />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.review}>({item.reviews.length} reviews)</Text>
@@ -112,9 +165,13 @@ export default function ProductScreen({route, navigation}) {
         <Text style={styles.descText}>{item.description}</Text>
       </View>
       <View style={styles.footer}>
-        <View style={styles.favBtn}>
-          <Fontisto name="bookmark" size={25} />
-        </View>
+        <TouchableOpacity onPress={() => toggleIsFav()} style={styles.favBtn}>
+          <Fontisto
+            name="bookmark"
+            size={25}
+            color={isFav ? COLORS.red : null}
+          />
+        </TouchableOpacity>
         <CustomButton
           title={isAvailable ? 'Add to Cart' : 'Out of Stock'}
           btnStyle={[
@@ -123,7 +180,7 @@ export default function ProductScreen({route, navigation}) {
           ]}
           titleStyle={styles.buttonText}
           disabled={!isAvailable ? true : false}
-          // handlePress={handleSubmit}
+          handlePress={handleAdd}
         />
       </View>
     </SafeAreaView>

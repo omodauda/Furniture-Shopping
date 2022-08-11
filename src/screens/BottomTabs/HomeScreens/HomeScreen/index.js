@@ -11,10 +11,10 @@ import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import TabCustomHeader from '@components/TabCustomHeader';
-import PRODUCTS from '@data/products';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToFav} from '@store/slices/favourite';
 
 // icons
-import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -83,6 +83,8 @@ const DATA = [
 ];
 
 export default function HomeScreen({navigation}) {
+  const PRODUCTS = useSelector(state => state.products);
+  const favProducts = useSelector(state => state.favourite.favouriteProducts);
   const [selectedId, setSelectedId] = useState('1');
 
   const selectedCategory = DATA.find(
@@ -95,6 +97,11 @@ export default function HomeScreen({navigation}) {
 
   const handleItemPress = itemId => {
     setSelectedId(itemId);
+  };
+
+  const dispatch = useDispatch();
+  const favItem = item => {
+    dispatch(addToFav({category: selectedCategory, productId: item.id}));
   };
 
   const renderItem = ({item}) => {
@@ -125,6 +132,10 @@ export default function HomeScreen({navigation}) {
   };
 
   const productList = ({item}) => {
+    const isFav = favProducts.find(
+      product =>
+        product.category === selectedCategory && product.id === item.id,
+    );
     return (
       <TouchableOpacity
         onPress={() => handleProductPress(item.id)}
@@ -138,8 +149,17 @@ export default function HomeScreen({navigation}) {
             style={[styles.image, {height: IMG_HEIGHT}]}
             resizeMode="cover"
           />
-          <TouchableOpacity style={styles.bag}>
-            <Fontisto name="shopping-bag" size={16} color={ITEM_ICON_COLOR} />
+          <TouchableOpacity
+            onPress={() => favItem(item)}
+            style={[
+              styles.bag,
+              {backgroundColor: isFav ? COLORS.gray5 : COLORS.black3},
+            ]}>
+            <Fontisto
+              name="shopping-bag"
+              size={16}
+              color={isFav ? COLORS.black : ITEM_ICON_COLOR}
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.name}>{item.name}</Text>

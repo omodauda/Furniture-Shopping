@@ -107,6 +107,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: COLORS.white
+  },
+  emptyView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyTextBold: {
+    fontFamily: 'NunitoSans-SemiBold',
+    fontWeight: '600',
+    fontSize: 20
+  },
+  emptyDesc: {
+    fontFamily: 'NunitoSans-Regular',
+    fontWeight: '400',
+    fontSize: 14,
+    width: '60%',
+    textAlign: 'center',
+    marginVertical: 8,
+    color: COLORS.gray
   }
 })
 

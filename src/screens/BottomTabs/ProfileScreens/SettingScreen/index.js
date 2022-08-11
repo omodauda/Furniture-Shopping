@@ -3,13 +3,14 @@ import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
 import COLORS from '@constants/Colors'
-import USER from '@data/user'
+import {useSelector} from 'react-redux'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const ICON_SIZE = 24;
 
-export default function SettingScreen({navigation}) {
+export default function SettingScreen({ navigation }) {
+  const USER = useSelector(state => state.user)
 	const {name, email} = USER
 
 	const [isEnabled, setIsEnabled] = useState({
