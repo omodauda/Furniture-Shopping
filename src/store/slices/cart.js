@@ -15,7 +15,11 @@ export const cartSlice = createSlice({
       const item = PRODUCTS.find(
         product => product.category === category,
       ).list.find(p => p.id === productId);
-      const {id, image, name, price} = item;
+      const {id, image, name, price, units} = item;
+      const isOutOfStock = units < 1 ? true : false;
+      if (isOutOfStock) {
+        return;
+      }
       const productIndex = state.products.findIndex(
         product => product.category === category && product.id === productId,
       );
