@@ -13,7 +13,7 @@ import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
 import {useSelector, useDispatch} from 'react-redux';
 import {addToCart} from '@store/slices/cart';
-import {addToFav} from '@store/slices/favourite';
+import {addToFav, removeFromFav} from '@store/slices/favourite';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -49,13 +49,17 @@ export default function ProductScreen({route, navigation}) {
   const [qty, setQty] = useState(1);
 
   const PRODUCTS = useSelector(state => state.products);
-  const dispatch = useDispatch();
+  const favProducts = useSelector(state => state.favourite.favouriteProducts);
 
   const item = PRODUCTS.find(
     product => product.category === selectedCategory,
   ).list.find(ware => ware.id === productId);
 
   const isAvailable = item.units > 0 ? true : false;
+  const isFav = favProducts.find(
+    product =>
+      product.category === selectedCategory && product.id === productId,
+  );
 
   const handleIncrease = () => {
     setQty(qty + 1);
@@ -68,13 +72,23 @@ export default function ProductScreen({route, navigation}) {
     return;
   };
 
-  const handleAddToFav = () => {
-    dispatch(
-      addToFav({
-        category: selectedCategory,
-        productId,
-      }),
-    );
+  const dispatch = useDispatch();
+  const toggleIsFav = () => {
+    if (isFav) {
+      dispatch(
+        removeFromFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    } else {
+      dispatch(
+        addToFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    }
   };
 
   const handleAdd = () => {
@@ -151,10 +165,12 @@ export default function ProductScreen({route, navigation}) {
         <Text style={styles.descText}>{item.description}</Text>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity
-          onPress={() => handleAddToFav()}
-          style={styles.favBtn}>
-          <Fontisto name="bookmark" size={25} />
+        <TouchableOpacity onPress={() => toggleIsFav()} style={styles.favBtn}>
+          <Fontisto
+            name="bookmark"
+            size={25}
+            color={isFav ? COLORS.red : null}
+          />
         </TouchableOpacity>
         <CustomButton
           title={isAvailable ? 'Add to Cart' : 'Out of Stock'}
