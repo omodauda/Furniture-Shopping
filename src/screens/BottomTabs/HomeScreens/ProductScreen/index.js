@@ -96,7 +96,7 @@ export default function ProductScreen({route, navigation}) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.screen}>
       <View
         style={[
           styles.section,

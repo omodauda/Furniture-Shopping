@@ -1,16 +1,16 @@
-import {StyleSheet} from 'react-native'
-import COLORS from '@constants/Colors'
+import {StyleSheet} from 'react-native';
+import COLORS from '@constants/Colors';
 
 const styles = StyleSheet.create({
   screen: {
-		flex: 1,
-		backgroundColor: COLORS.white,
-	},
-	section: {
-    paddingHorizontal: 20,
-		marginVertical: 15
+    flex: 1,
+    backgroundColor: COLORS.white,
   },
-	sectionHeader: {
+  section: {
+    paddingHorizontal: 20,
+    marginVertical: 15,
+  },
+  sectionHeader: {
     flexDirection: 'row',
   },
   sectionHeaderText: {
@@ -18,43 +18,43 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 18,
     color: COLORS.gray2,
-		marginLeft: 10
+    marginLeft: 10,
   },
-	checkBox: {
-		width: 20,
-		height: 20,
-		borderRadius: 4,
-		borderWidth: 1.5,
-	},
+  checkBox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1.5,
+  },
   card: {
     marginTop: 10,
-		shadowColor: COLORS.shadow,
-		shadowOffset: {
-			width: 0,
-			height: 8
-		},
-		shadowOpacity: 0.5,
-		shadowRadius: 10,
-		elevation: 10
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 10,
   },
   topCard: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: COLORS.white,
     paddingTop: 15,
     paddingBottom: 10,
     paddingHorizontal: 20,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-		borderColor: COLORS.blurGray,
+    borderColor: COLORS.blurGray,
     borderBottomWidth: 2,
-
+    elevation: 10,
   },
   name: {
     fontFamily: 'NunitoSans-Bold',
     fontWeight: '600',
     fontSize: 18,
-    color: COLORS.black
+    color: COLORS.black,
   },
   bottomCard: {
     paddingLeft: 20,
@@ -65,44 +65,45 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: COLORS.blurGray,
     minHeight: 54,
-		backgroundColor: COLORS.white
+    backgroundColor: COLORS.white,
+    elevation: 10,
   },
-	address: {
+  address: {
     fontFamily: 'NunitoSans-Regular',
     fontWeight: '400',
     fontSize: 14,
     color: COLORS.gray,
     lineHeight: 25,
   },
-	addBtn: {
-		width: 60,
-		height: 60,
-		borderRadius: 30,
-		backgroundColor: COLORS.white,
-		position: 'absolute',
-		bottom: 35,
-		right: 25,
-		justifyContent: 'center',
-		alignItems: 'center',
-		shadowColor: COLORS.shadow,
-		shadowOffset: {
-			width: 4,
-			height: 4
-		},
-		shadowOpacity: 0.5,
-		shadowRadius: 40,
-		elevation: 10
+  addBtn: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: COLORS.white,
+    position: 'absolute',
+    bottom: 35,
+    right: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 40,
+    elevation: 10,
   },
   emptyView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   emptyTextBold: {
     fontFamily: 'NunitoSans-SemiBold',
     fontWeight: '600',
     fontSize: 20,
-    color: COLORS.black
+    color: COLORS.black,
   },
   emptyDesc: {
     fontFamily: 'NunitoSans-Regular',
@@ -111,8 +112,8 @@ const styles = StyleSheet.create({
     width: '60%',
     textAlign: 'center',
     marginVertical: 8,
-    color: COLORS.gray
-  }
-})
+    color: COLORS.gray,
+  },
+});
 
-export default styles
+export default styles;

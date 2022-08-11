@@ -1,4 +1,10 @@
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from './styles';
 import CustomTextInput from '@components/CustomTextInput';
@@ -80,7 +86,7 @@ export default function AddShippingAddressScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="ADD SHIPPING ADDRESS" />
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         <Formik
           validationSchema={addShippingAddressValidationSchema}
           initialValues={{
@@ -199,7 +205,7 @@ export default function AddShippingAddressScreen({navigation}) {
             </>
           )}
         </Formik>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, Image} from 'react-native';
+import {View, Text, SafeAreaView, Image, ScrollView} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import StackScreenHeader from '@components/StackScreenHeader';
@@ -21,7 +21,7 @@ export default function AddPaymentMethodScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="ADD PAYMENT METHOD" />
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <View style={styles.imgContainer}>
           <Image
             style={styles.image}
@@ -125,7 +125,7 @@ export default function AddPaymentMethodScreen({navigation}) {
             )}
           </Formik>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
