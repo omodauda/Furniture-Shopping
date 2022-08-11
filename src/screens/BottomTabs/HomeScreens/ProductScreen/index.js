@@ -11,8 +11,9 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
-import { useSelector, useDispatch } from 'react-redux'
-import {addToCart} from '@store/slices/cart'
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCart} from '@store/slices/cart';
+import {addToFav} from '@store/slices/favourite';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -44,11 +45,11 @@ const PALLETE = [
 ];
 
 export default function ProductScreen({route, navigation}) {
-  const { productId, selectedCategory } = route.params;
+  const {productId, selectedCategory} = route.params;
   const [qty, setQty] = useState(1);
 
-  const PRODUCTS = useSelector(state => state.products)
-  const dispatch = useDispatch()
+  const PRODUCTS = useSelector(state => state.products);
+  const dispatch = useDispatch();
 
   const item = PRODUCTS.find(
     product => product.category === selectedCategory,
@@ -58,18 +59,27 @@ export default function ProductScreen({route, navigation}) {
 
   const handleIncrease = () => {
     setQty(qty + 1);
-  }
+  };
 
   const handleDecrease = () => {
     if (qty > 1) {
       setQty(qty - 1);
     }
     return;
-  }
+  };
+
+  const handleAddToFav = () => {
+    dispatch(
+      addToFav({
+        category: selectedCategory,
+        productId,
+      }),
+    );
+  };
 
   const handleAdd = () => {
-    dispatch(addToCart({productId, category: selectedCategory, quantity: qty}))
-  }
+    dispatch(addToCart({productId, category: selectedCategory, quantity: qty}));
+  };
 
   return (
     <SafeAreaView>
@@ -127,9 +137,13 @@ export default function ProductScreen({route, navigation}) {
           />
         </View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('Review', {productId: productId, productCategory: selectedCategory})}
-          style={styles.ratings}
-        >
+          onPress={() =>
+            navigation.navigate('Review', {
+              productId: productId,
+              productCategory: selectedCategory,
+            })
+          }
+          style={styles.ratings}>
           <MaterialIcons name="star" size={20} color={COLORS.gold} />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.review}>({item.reviews.length} reviews)</Text>
@@ -137,9 +151,11 @@ export default function ProductScreen({route, navigation}) {
         <Text style={styles.descText}>{item.description}</Text>
       </View>
       <View style={styles.footer}>
-        <View style={styles.favBtn}>
+        <TouchableOpacity
+          onPress={() => handleAddToFav()}
+          style={styles.favBtn}>
           <Fontisto name="bookmark" size={25} />
-        </View>
+        </TouchableOpacity>
         <CustomButton
           title={isAvailable ? 'Add to Cart' : 'Out of Stock'}
           btnStyle={[
