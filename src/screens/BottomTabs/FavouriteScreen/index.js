@@ -13,7 +13,8 @@ import TabCustomHeader from '@components/TabCustomHeader';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeFromFav} from '@store/slices/favourite';
+import {removeFromFav, clearFav} from '@store/slices/favourite';
+import {addToCart} from '@store/slices/cart';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -33,6 +34,15 @@ export default function FavouriteScreen({navigation}) {
     const {category, id} = item;
     dispatch(removeFromFav({category, productId: id}));
   };
+
+  const handleAddAllToCart = () => {
+    favProducts.map(product => {
+      const {category, id} = product;
+      dispatch(addToCart({productId: id, category, quantity: 1}));
+    });
+    dispatch(clearFav());
+  };
+
   const renderItem = ({item}) => (
     <View style={styles.product}>
       <View style={styles.row}>
@@ -81,6 +91,7 @@ export default function FavouriteScreen({navigation}) {
             title="Add all to my cart"
             titleStyle={styles.btnText}
             btnStyle={styles.btn}
+            handlePress={handleAddAllToCart}
           />
         </>
       )}
