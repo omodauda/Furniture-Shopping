@@ -59,7 +59,9 @@ export const userSlice = createSlice({
         orders,
         address,
       };
-      state.orders.push(newOrder);
+      return {
+        orders: [newOrder, ...state.orders],
+      };
     },
   },
 });

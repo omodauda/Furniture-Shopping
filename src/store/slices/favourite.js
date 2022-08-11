@@ -28,7 +28,9 @@ export const favouriteSlice = createSlice({
         price,
         units,
       };
-      state.favouriteProducts.push(newItem);
+      return {
+        favouriteProducts: [newItem, ...state.favouriteProducts],
+      };
     },
     removeFromFav: (state, action) => {
       const {category, productId} = action.payload;

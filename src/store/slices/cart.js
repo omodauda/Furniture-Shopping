@@ -36,8 +36,10 @@ export const cartSlice = createSlice({
         unitPrice: price,
         totalPrice: price * quantity,
       };
-      state.products.push(newItem);
-      state.total += price * quantity;
+      return {
+        products: [newItem, ...state.products],
+        total: state.total + price * quantity,
+      };
     },
     reduceItemQty: (state, action) => {
       const {category, productId, unitPrice, totalPrice} = action.payload;
