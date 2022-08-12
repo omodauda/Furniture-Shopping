@@ -16,20 +16,26 @@ import userReducer from './slices/user';
 import notificationReducer from './slices/notification';
 import cartReducer from './slices/cart';
 import favouriteReducer from './slices/favourite';
+import ordersReducer from './slices/orders';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
 
+const reducers = combineReducers({
+  products: productsReducer,
+  user: userReducer,
+  notification: notificationReducer,
+  cart: cartReducer,
+  favourite: favouriteReducer,
+  orders: ordersReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 export const store = configureStore({
-  reducer: {
-    products: productsReducer,
-    user: persistReducer(persistConfig, userReducer),
-    notification: persistReducer(persistConfig, notificationReducer),
-    cart: persistReducer(persistConfig, cartReducer),
-    favourite: persistReducer(persistConfig, favouriteReducer),
-  },
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
