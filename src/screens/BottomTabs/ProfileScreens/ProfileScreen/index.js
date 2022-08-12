@@ -22,15 +22,9 @@ const ICON_COLOR = COLORS.black3;
 
 export default function ProfileScreen({navigation}) {
   const USER = useSelector(state => state.user);
-  const {
-    name,
-    email,
-    image,
-    orders,
-    shippingAddresses,
-    paymentMethods,
-    reviews,
-  } = USER;
+  const ORDERS = useSelector(state => state.orders);
+  const {name, email, image, shippingAddresses, paymentMethods, reviews} = USER;
+  const {orders} = ORDERS;
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
