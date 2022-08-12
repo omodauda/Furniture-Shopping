@@ -5,7 +5,7 @@ import StackScreenHeader from '@components/StackScreenHeader';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
-import {createOrder} from '@store/slices/user';
+import {createOrder} from '@store/slices/orders';
 import {clearCart} from '@store/slices/cart';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
