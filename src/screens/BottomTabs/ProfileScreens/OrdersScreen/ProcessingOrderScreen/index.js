@@ -5,7 +5,7 @@ import OrdersList from '../OrdersList';
 import {useSelector} from 'react-redux';
 
 export default function ProcessingOrderScreen() {
-  const Orders = useSelector(state => state.user.orders);
+  const Orders = useSelector(state => state.orders.orders);
   const data = Orders.filter(order => order.status === 'Processing');
   return (
     <View style={styles.screen}>
