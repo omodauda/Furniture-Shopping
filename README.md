@@ -1,6 +1,5 @@
 # Farm Oasis
 
-
 ![screenshot](./furniture-shopping.png)
 
 Furniture Shopping is an e-commerce mobile application for house, bedroom
@@ -10,11 +9,22 @@ and office furnitures.
 
 - Responsive design that works with both ios & android devices
 - User authentication
-- Product management
+- Product Display
+- User Cart
+- Favourite Products
+- User Profile
+- Checkout
+- Orders
+- Payment
 
 ## Built With
 
 - React Native
+- Redux toolkit
+
+## Demo
+
+[Furniture Shopping APK](https://drive.google.com/drive/folders/1M2tcetKYouo_nhWnaqYq8gZqytIRXDkk?usp=sharing)
 
 ## Getting Started
 
@@ -35,7 +45,7 @@ cd ./Furniture-Shopping
 ### Install
 
 ```bash
-yarn
+yarn install
 ```
 
 ### Usage
@@ -50,3 +60,11 @@ yarn start
 yarn android
 yarn ios
 ```
+
+## Authors
+
+👤 **Lawal Dauda**
+
+## Acknowledgements
+
+- [UXCRUSH](https://www.uxcrush.com/furniture-free-figma-mobile-ui-kit/)
