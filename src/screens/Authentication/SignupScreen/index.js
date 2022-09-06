@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import AuthCustomHeader from '@components/AuthCustomHeader';
 import styles from './styles';
 import {Formik, Field} from 'formik';
@@ -8,7 +8,9 @@ import CustomButton from '@components/CustomButton';
 import COLORS from '@constants/Colors';
 import { signupValidationSchema } from '@validations/SignupValidation';
 import { useDispatch } from 'react-redux';
-import { signUp} from '@store/slices/user';
+import { signUp } from '@store/slices/user';
+import { useMutation } from '@tanstack/react-query';
+import { userSignUp} from '@store/api/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -17,11 +19,25 @@ export default function SignupScreen({navigation}) {
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   
+  
+  const mutation = useMutation(userSignUp, {
+    onError: (error) => {
+      console.log('i was called');
+      console.log(error.message)
+    },
+    onSuccess: (variables) => {
+      const { fullName, email } = variables;
+      dispatch(signUp({ name: fullName , email }));
+      navigation.navigate('Main')
+    }
+  });
+  
   const dispatch = useDispatch()
-  const handleSignUp = values => {
+  const handleSignUp = async (values) => {
     const { name, email, password } = values;
-    dispatch(signUp({ name, email, password }));
-    navigation.navigate('Main')
+    try {
+      const response = await mutation.mutateAsync({ fullName: name, email, password })
+    } catch (error) {}
   }
 
   return (
@@ -129,6 +145,16 @@ export default function SignupScreen({navigation}) {
                   <Text style={styles.errorText}>{errors.confirmPassword}</Text>
                 )}
               </View>
+              {/* {
+                mutation.isError ?
+                  <Text style={styles.errorText}>{ mutation.error.message}</Text> :
+                  null
+              } */}
+              {/* {
+                mutation.isLoading ?
+                  <ActivityIndicator size='small' color='black' /> :
+                  null
+              } */}
               <CustomButton
                 title="SIGN UP"
                 btnStyle={[
