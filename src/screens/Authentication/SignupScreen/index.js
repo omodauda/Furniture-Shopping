@@ -9,8 +9,6 @@ import COLORS from '@constants/Colors';
 import { signupValidationSchema } from '@validations/SignupValidation';
 import { useDispatch } from 'react-redux';
 import { signUp } from '@store/slices/user';
-import { useMutation } from '@tanstack/react-query';
-import { userSignUp} from '@store/api/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -20,24 +18,26 @@ export default function SignupScreen({navigation}) {
     useState(false);
   
   
-  const mutation = useMutation(userSignUp, {
-    onError: (error) => {
-      console.log('i was called');
-      console.log(error.message)
-    },
-    onSuccess: (variables) => {
-      const { fullName, email } = variables;
-      dispatch(signUp({ name: fullName , email }));
-      navigation.navigate('Main')
-    }
-  });
+  // const mutation = useMutation(userSignUp, {
+  //   onError: (error) => {
+  //     console.log('i was called');
+  //     console.log(error.message)
+  //   },
+  //   onSuccess: (variables) => {
+  //     const { fullName, email } = variables;
+  //     dispatch(signUp({ name: fullName , email }));
+  //     navigation.navigate('Main')
+  //   }
+  // });
   
   const dispatch = useDispatch()
   const handleSignUp = async (values) => {
     const { name, email, password } = values;
-    try {
-      const response = await mutation.mutateAsync({ fullName: name, email, password })
-    } catch (error) {}
+    dispatch(signUp({ name, email, password }));
+    navigation.navigate('Main')
+    // try {
+    //   const response = await mutation.mutateAsync({ fullName: name, email, password })
+    // } catch (error) {}
   }
 
   return (
