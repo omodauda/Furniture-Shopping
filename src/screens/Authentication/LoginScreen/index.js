@@ -7,11 +7,42 @@ import CustomButton from '@components/CustomButton';
 import {Formik, Field} from 'formik';
 import {loginValidationSchema} from '@validations/LoginValidation';
 import COLORS from '@constants/Colors';
+import { userLogin } from '@store/api/user';
+import {useQuery} from '@tanstack/react-query'
 
 import Feather from 'react-native-vector-icons/Feather';
 
 export default function LoginScreen({navigation}) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const { data, error, isLoading, refetch } = useQuery(['user'], () => userLogin({email, password}), { enabled: false, retry: false});
+  
+  if (data) {
+    console.log('data', data.data);
+    navigation.navigate('Main')
+  }
+
+  const handleSubmit = (values) => {
+    console.log('i was called')
+    const { email, password } = values;
+    setEmail(email);
+    setPassword(password);
+    refetch();
+  }
+
+  // const handleLogin = async (values) => {
+  //   const { email, password } = values;
+  //   const { data, error, isLoading } = useQuery(['user'], userLogin({email, password}));
+  //   console.log('data', data);
+  //   console.log('error', error);
+  //   // navigation.navigate('Main')
+  //   // try {
+  //   //   const response = await mutation.mutateAsync({ fullName: name, email, password })
+  //   // } catch (error) {}
+  // }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -28,7 +59,7 @@ export default function LoginScreen({navigation}) {
               email: '',
               password: '',
             }}
-            onSubmit={values => console.log({...values})}>
+            onSubmit={values => handleSubmit({...values})}>
             {({handleSubmit, isValid, errors, touched}) => (
               <>
                 <View style={styles.formControl}>
