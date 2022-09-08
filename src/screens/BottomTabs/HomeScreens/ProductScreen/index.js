@@ -11,9 +11,10 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
-import {useSelector, useDispatch} from 'react-redux';
 import {addToCart} from '@store/slices/cart';
-import {addToFav, removeFromFav} from '@store/slices/favourite';
+import { addToFav, removeFromFav } from '@store/slices/favourite';
+import { useQuery } from '@tanstack/react-query';
+import {getProductById } from '@store/api/product';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -45,21 +46,35 @@ const PALLETE = [
 ];
 
 export default function ProductScreen({route, navigation}) {
-  const {productId, selectedCategory} = route.params;
+  const {productId} = route.params;
   const [qty, setQty] = useState(1);
 
-  const PRODUCTS = useSelector(state => state.products);
-  const favProducts = useSelector(state => state.favourite.favouriteProducts);
+  console.log(productId);
 
-  const item = PRODUCTS.find(
-    product => product.category === selectedCategory,
-  ).list.find(ware => ware.id === productId);
+  const { data, error, isLoading, refetch } = useQuery(['product'], () => getProductById(productId), { enabled: true, retry: false});
+  if (data) {
+    console.log('data.product', data)
+  
+  } else {
+    console.log('error.product', error)
+  }
 
-  const isAvailable = item.units > 0 ? true : false;
-  const isFav = favProducts.find(
-    product =>
-      product.category === selectedCategory && product.id === productId,
-  );
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
+  // const PRODUCTS = useSelector(state => state.products);
+  // const favProducts = useSelector(state => state.favourite.favouriteProducts);
+
+  // const item = PRODUCTS.find(
+  //   product => product.category === selectedCategory,
+  // ).list.find(ware => ware.id === productId);
+
+  const isAvailable = data.quantity > 0 ? true : false;
+  // const isFav = favProducts.find(
+  //   product =>
+  //     product.category === selectedCategory && product.id === productId,
+  // );
 
   const handleIncrease = () => {
     setQty(qty + 1);
@@ -72,27 +87,27 @@ export default function ProductScreen({route, navigation}) {
     return;
   };
 
-  const dispatch = useDispatch();
-  const toggleIsFav = () => {
-    if (isFav) {
-      dispatch(
-        removeFromFav({
-          category: selectedCategory,
-          productId,
-        }),
-      );
-    } else {
-      dispatch(
-        addToFav({
-          category: selectedCategory,
-          productId,
-        }),
-      );
-    }
-  };
+  // const dispatch = useDispatch();
+  // const toggleIsFav = () => {
+  //   if (isFav) {
+  //     dispatch(
+  //       removeFromFav({
+  //         category: selectedCategory,
+  //         productId,
+  //       }),
+  //     );
+  //   } else {
+  //     dispatch(
+  //       addToFav({
+  //         category: selectedCategory,
+  //         productId,
+  //       }),
+  //     );
+  //   }
+  // };
 
   const handleAdd = () => {
-    dispatch(addToCart({productId, category: selectedCategory, quantity: qty}));
+    // dispatch(addToCart({productId, category: selectedCategory, quantity: qty}));
   };
 
   return (
@@ -103,7 +118,7 @@ export default function ProductScreen({route, navigation}) {
           {width: SECTION_WIDTH, height: SECTION_HEIGHT},
         ]}>
         <Image
-          source={item.image}
+          source={data.images}
           style={styles.image}
           resizeMethod="scale"
           resizeMode="cover"
@@ -140,9 +155,9 @@ export default function ProductScreen({route, navigation}) {
         })}
       </View>
       <View style={styles.details}>
-        <Text style={styles.nameText}>{item.name}</Text>
+        <Text style={styles.nameText}>{data.name}</Text>
         <View style={styles.row}>
-          <Text style={styles.price}>$ {item.price}</Text>
+          <Text style={styles.price}>$ {data.price}</Text>
           <CustomUnitControl
             style={styles.row}
             qty={qty}
@@ -150,7 +165,7 @@ export default function ProductScreen({route, navigation}) {
             handleDecrease={handleDecrease}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() =>
             navigation.navigate('Review', {
               productId: productId,
@@ -161,15 +176,15 @@ export default function ProductScreen({route, navigation}) {
           <MaterialIcons name="star" size={20} color={COLORS.gold} />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.review}>({item.reviews.length} reviews)</Text>
-        </TouchableOpacity>
-        <Text style={styles.descText}>{item.description}</Text>
+        </TouchableOpacity> */}
+        <Text style={styles.descText}>{data.description}</Text>
       </View>
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => toggleIsFav()} style={styles.favBtn}>
           <Fontisto
             name="bookmark"
             size={25}
-            color={isFav ? COLORS.red : null}
+            // color={isFav ? COLORS.red : null}
           />
         </TouchableOpacity>
         <CustomButton
