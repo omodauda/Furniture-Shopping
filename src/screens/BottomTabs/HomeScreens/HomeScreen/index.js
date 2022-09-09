@@ -7,11 +7,12 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import TabCustomHeader from '@components/TabCustomHeader';
-// import {useSelector, useDispatch} from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+import { setProducts } from '@store/slices/products';
 import { addToFav } from '@store/slices/favourite';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@store/api/product';
@@ -84,47 +85,30 @@ const DATA = [
   },
 ];
 
-// const queryCache = new QueryCache({
-//   onError: error => {
-//     console.log(error)
-//   },
-//   onSuccess: data => {
-//     console.log(data)
-//   }
-// });
-
-// const query = queryCache.find(['user']);
-// console.log('user_query', query);
 
 export default function HomeScreen({ navigation }) {
-  // const PRODUCTS = useSelector(state => state.products);
-  // const favProducts = useSelector(state => state.favourite.favouriteProducts);
+  
   const [selectedId, setSelectedId] = useState('Chair');
 
-  // const selectedCategory = DATA.find(
-  //   category => selectedId === category.id,
-  // ).title;
+  // const dispatch = useDispatch();
+  
+  const { data, error, isLoading, refetch } = useQuery(['product', selectedId], () => getCategories(selectedId), { enabled: true, retry: false });
 
-  // const CATALOG = PRODUCTS.find(
-  //   product => product.category === selectedCategory,
-  // ).list;
-
-  const { data, error, isLoading, refetch } = useQuery(['product', selectedId], () => getCategories(selectedId), { enabled: true, retry: false});
+  
   if (data) {
     console.log('data.products', data)
   
   } else {
     console.log('error.products', error)
   }
-  // console.log('data', data)
   
   const handleItemPress = title => {
     setSelectedId(title);
   };
 
-  // const dispatch = useDispatch();
+  
   const favItem = item => {
-    dispatch(addToFav({category: selectedCategory, productId: item.id}));
+    // dispatch(addToFav({category: selectedCategory, productId: item.id}));
   };
 
   const renderItem = ({item}) => {
