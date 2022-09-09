@@ -11,6 +11,7 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
+import {useSelector, useDispatch} from 'react-redux'
 import {addToCart} from '@store/slices/cart';
 import { addToFav, removeFromFav } from '@store/slices/favourite';
 import { useQuery } from '@tanstack/react-query';
@@ -63,13 +64,6 @@ export default function ProductScreen({route, navigation}) {
     return <Text>Loading...</Text>
   }
 
-  // const PRODUCTS = useSelector(state => state.products);
-  // const favProducts = useSelector(state => state.favourite.favouriteProducts);
-
-  // const item = PRODUCTS.find(
-  //   product => product.category === selectedCategory,
-  // ).list.find(ware => ware.id === productId);
-
   const isAvailable = data.quantity > 0 ? true : false;
   // const isFav = favProducts.find(
   //   product =>
@@ -87,27 +81,27 @@ export default function ProductScreen({route, navigation}) {
     return;
   };
 
-  // const dispatch = useDispatch();
-  // const toggleIsFav = () => {
-  //   if (isFav) {
-  //     dispatch(
-  //       removeFromFav({
-  //         category: selectedCategory,
-  //         productId,
-  //       }),
-  //     );
-  //   } else {
-  //     dispatch(
-  //       addToFav({
-  //         category: selectedCategory,
-  //         productId,
-  //       }),
-  //     );
-  //   }
-  // };
+  const dispatch = useDispatch();
+  const toggleIsFav = () => {
+    if (isFav) {
+      dispatch(
+        removeFromFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    } else {
+      dispatch(
+        addToFav({
+          category: selectedCategory,
+          productId,
+        }),
+      );
+    }
+  };
 
   const handleAdd = () => {
-    // dispatch(addToCart({productId, category: selectedCategory, quantity: qty}));
+    dispatch(addToCart({productId, quantity: qty}));
   };
 
   return (
