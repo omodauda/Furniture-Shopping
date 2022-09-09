@@ -20,6 +20,8 @@ import {
   increaseItemQty,
   removeFromCart,
 } from '@store/slices/cart';
+import { getUserCart } from '@store/api/cart';
+import { useQuery } from '@tanstack/react-query';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -31,23 +33,36 @@ const IMG_WIDTH = 0.26 * width;
 const IMG_HEIGHT = 0.12 * height;
 
 export default function CartScreen({navigation}) {
-  const {products: DATA, total} = useSelector(state => state.cart);
-  const {shippingAddresses, paymentMethods} = useSelector(state => state.user);
+  // const {products: DATA, total} = useSelector(state => state.cart);
+  // const {shippingAddresses, paymentMethods} = useSelector(state => state.user);
+  const {data, isLoading, error} = useQuery(['cart'], () => getUserCart(), {enabled: true, retry: true})
+  if (data) {
+    console.log('cart.data', data.cart)
+  
+  } else {
+    console.log('error.cart', error)
+  }
 
-  const isEmptyCart = DATA.length < 1 ? true : false;
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
 
-  const handleSubmit = () => {
-    const isEmptyAddress = shippingAddresses.length < 1 ? true : false;
-    const isEmptyPaymentMethods = paymentMethods.length < 1 ? true : false;
+  const {cart, total } = data;
 
-    if (isEmptyAddress) {
-      navigation.navigate('AddShippingAddress');
-    } else if (isEmptyPaymentMethods) {
-      navigation.navigate('AddPaymentMethod');
-    } else {
-      navigation.navigate('CheckOut');
-    }
-  };
+  const isEmptyCart = data.cart.length < 1 ? true : false;
+
+  // const handleSubmit = () => {
+  //   const isEmptyAddress = shippingAddresses.length < 1 ? true : false;
+  //   const isEmptyPaymentMethods = paymentMethods.length < 1 ? true : false;
+
+  //   if (isEmptyAddress) {
+  //     navigation.navigate('AddShippingAddress');
+  //   } else if (isEmptyPaymentMethods) {
+  //     navigation.navigate('AddPaymentMethod');
+  //   } else {
+  //     navigation.navigate('CheckOut');
+  //   }
+  // };
 
   const dispatch = useDispatch();
 
@@ -66,35 +81,38 @@ export default function CartScreen({navigation}) {
     dispatch(removeFromCart({category, productId: id}));
   };
 
-  const renderItem = ({item}) => (
-    <View style={styles.product}>
-      <View style={styles.row}>
-        <View
-          style={[styles.imgContainer, {width: IMG_WIDTH, height: IMG_HEIGHT}]}>
-          <Image style={styles.image} source={item.image} resizeMode="cover" />
+  const renderItem = ({ item }) => {
+    const { product: {name, images, quantity: itemUnit, price}, quantity} = item;
+    return (
+      <View style={styles.product}>
+        <View style={styles.row}>
+          <View
+            style={[styles.imgContainer, {width: IMG_WIDTH, height: IMG_HEIGHT}]}>
+            <Image style={styles.image} source={images} resizeMode="cover" />
+          </View>
+          <View style={styles.details}>
+            <Text style={styles.name}>{name}</Text>
+            <CustomUnitControl
+              qty={quantity}
+              style={styles.split}
+              handleDecrease={() => handleDecrease(item)}
+              handleIncrease={() => handleIncrease(item)}
+            />
+          </View>
         </View>
-        <View style={styles.details}>
-          <Text style={styles.name}>{item.name}</Text>
-          <CustomUnitControl
-            qty={item.quantity}
-            style={styles.split}
-            handleDecrease={() => handleDecrease(item)}
-            handleIncrease={() => handleIncrease(item)}
-          />
+        <View style={styles.icons}>
+          <TouchableOpacity onPress={() => handleRemoveItem(item)}>
+            <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
+          </TouchableOpacity>
+          <Text style={styles.price}>$ {price}.00</Text>
         </View>
       </View>
-      <View style={styles.icons}>
-        <TouchableOpacity onPress={() => handleRemoveItem(item)}>
-          <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
-        </TouchableOpacity>
-        <Text style={styles.price}>$ {item.totalPrice}.00</Text>
-      </View>
-    </View>
-  );
+    )
+  }
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="MY CART" />
-      {isEmptyCart ? (
+       {isEmptyCart ? (
         <View style={styles.emptyView}>
           <MaterialIcons
             name="add-shopping-cart"
@@ -110,7 +128,7 @@ export default function CartScreen({navigation}) {
         <>
           <View style={styles.list}>
             <FlatList
-              data={DATA}
+              data={cart}
               keyExtractor={item => item.id}
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
@@ -136,7 +154,6 @@ export default function CartScreen({navigation}) {
             title="CHECK OUT"
             btnStyle={styles.btn}
             titleStyle={styles.btnText}
-            handlePress={handleSubmit}
           />
         </>
       )}
