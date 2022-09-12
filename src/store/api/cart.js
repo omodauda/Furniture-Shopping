@@ -59,4 +59,24 @@ const removeFromCart = async (cartItemId) => {
   return resData;
 }
 
-export {getUserCart, addToCart, removeFromCart}
+const updateCartItem = async ({ cartItemId, quantity }) => {
+  console.log('cartItemId', cartItemId)
+  const response = await fetch(`${API_URL}/cart/${cartItemId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      quantity
+    })
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  return resData;
+}
+
+export {getUserCart, addToCart, removeFromCart, updateCartItem}
