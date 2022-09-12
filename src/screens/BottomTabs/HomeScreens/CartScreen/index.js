@@ -18,10 +18,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   reduceItemQty,
   increaseItemQty,
-  removeFromCart,
 } from '@store/slices/cart';
-import { getUserCart } from '@store/api/cart';
-import { useQuery } from '@tanstack/react-query';
+import { getUserCart, removeFromCart } from '@store/api/cart';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import {queryClient} from '../../../../../App'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,7 +35,7 @@ const IMG_HEIGHT = 0.12 * height;
 export default function CartScreen({navigation}) {
   // const {products: DATA, total} = useSelector(state => state.cart);
   // const {shippingAddresses, paymentMethods} = useSelector(state => state.user);
-  const {data, isLoading, error} = useQuery(['cart'], () => getUserCart(), {enabled: true, retry: true})
+  const {data, isLoading, error} = useQuery(['cart'], () => getUserCart(), {enabled: true, retry: false})
   if (data) {
     console.log('cart.data', data.cart)
   
@@ -50,6 +50,17 @@ export default function CartScreen({navigation}) {
   const {cart, total } = data;
 
   const isEmptyCart = data.cart.length < 1 ? true : false;
+
+  const mutation = useMutation(removeFromCart, {
+    onError: (error) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      console.log('i was successful');
+      console.log(data);
+      queryClient.invalidateQueries(['cart'])
+    }
+  });
 
   // const handleSubmit = () => {
   //   const isEmptyAddress = shippingAddresses.length < 1 ? true : false;
@@ -76,13 +87,12 @@ export default function CartScreen({navigation}) {
     dispatch(increaseItemQty({category, productId: id, unitPrice, totalPrice}));
   };
 
-  const handleRemoveItem = item => {
-    const {category, id} = item;
-    dispatch(removeFromCart({category, productId: id}));
+  const handleRemoveItem = id => {
+    mutation.mutate(id)
   };
 
   const renderItem = ({ item }) => {
-    const { product: {name, images, quantity: itemUnit, price}, quantity} = item;
+    const { id, product: {name, images, quantity: itemUnit, price}, quantity} = item;
     return (
       <View style={styles.product}>
         <View style={styles.row}>
@@ -101,7 +111,7 @@ export default function CartScreen({navigation}) {
           </View>
         </View>
         <View style={styles.icons}>
-          <TouchableOpacity onPress={() => handleRemoveItem(item)}>
+          <TouchableOpacity onPress={() => handleRemoveItem(id)}>
             <AntDesign name="closecircleo" size={20} color={COLORS.gray4} />
           </TouchableOpacity>
           <Text style={styles.price}>$ {price}.00</Text>
