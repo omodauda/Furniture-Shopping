@@ -100,29 +100,6 @@ export default function ProductScreen({route, navigation}) {
     return;
   };
 
-  const dispatch = useDispatch();
-  const toggleIsFav = () => {
-    if (isFav) {
-      dispatch(
-        removeFromFav({
-          category: selectedCategory,
-          productId,
-        }),
-      );
-    } else {
-      dispatch(
-        addToFav({
-          category: selectedCategory,
-          productId,
-        }),
-      );
-    }
-  };
-
-  // const handleAdd = () => {
-  //   dispatch(addToCart({productId, quantity: qty}));
-  // };
-
   return (
     <SafeAreaView style={styles.screen}>
       <View
