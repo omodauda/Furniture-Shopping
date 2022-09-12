@@ -43,14 +43,6 @@ export default function CartScreen({navigation}) {
     console.log('error.cart', error)
   }
 
-  if (isLoading) {
-    return <Text>Loading...</Text>
-  }
-
-  const {cart, total } = data;
-
-  const isEmptyCart = data.cart.length < 1 ? true : false;
-
   const deleteMutation = useMutation(removeFromCart, {
     onError: (error) => {
       console.log(error)
@@ -73,6 +65,28 @@ export default function CartScreen({navigation}) {
     }
   })
 
+  const handleUpdate = (action, id, quantity) => {
+    if (action === '+') {
+      updateMutation.mutate({cartItemId: id, quantity: quantity + 1})
+    } else if (action === '-') {
+      updateMutation.mutate({cartItemId: id, quantity: quantity - 1})
+    }
+  }
+
+  const handleRemoveItem = id => {
+    deleteMutation.mutate(id)
+  };
+
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
+  const {cart, total } = data;
+
+  const isEmptyCart = data.cart.length < 1 ? true : false;
+
+  
+
 
   // const handleSubmit = () => {
   //   const isEmptyAddress = shippingAddresses.length < 1 ? true : false;
@@ -86,17 +100,6 @@ export default function CartScreen({navigation}) {
   //     navigation.navigate('CheckOut');
   //   }
   // };
-
-  const handleUpdate = (action, id, quantity) => {
-    if (action === '+') {
-      updateMutation.mutate({cartItemId: id, quantity: quantity + 1})
-    } else if (action === '-') {
-      updateMutation.mutate({cartItemId: id, quantity: quantity - 1})
-    }
-  }
-  const handleRemoveItem = id => {
-    deleteMutation.mutate(id)
-  };
 
   const renderItem = ({ item }) => {
     const { id, product: {name, images, quantity: itemUnit, price}, quantity} = item;
@@ -112,8 +115,8 @@ export default function CartScreen({navigation}) {
             <CustomUnitControl
               qty={quantity}
               style={styles.split}
-              handleIncrease={() => handleUpdate(action= '+', id, quantity)}
-              handleDecrease={() => handleUpdate(action= '-', id, quantity)}
+              handleIncrease={() => handleUpdate(action='+', id, quantity)}
+              handleDecrease={() => handleUpdate(action='-', id, quantity)}
             />
           </View>
         </View>
