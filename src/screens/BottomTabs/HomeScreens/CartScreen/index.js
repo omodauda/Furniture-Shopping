@@ -19,7 +19,7 @@ import {
   reduceItemQty,
   increaseItemQty,
 } from '@store/slices/cart';
-import { getUserCart, removeFromCart } from '@store/api/cart';
+import { getUserCart, removeFromCart, updateCartItem } from '@store/api/cart';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {queryClient} from '../../../../../App'
 
@@ -51,7 +51,7 @@ export default function CartScreen({navigation}) {
 
   const isEmptyCart = data.cart.length < 1 ? true : false;
 
-  const mutation = useMutation(removeFromCart, {
+  const deleteMutation = useMutation(removeFromCart, {
     onError: (error) => {
       console.log(error)
     },
@@ -61,6 +61,18 @@ export default function CartScreen({navigation}) {
       queryClient.invalidateQueries(['cart'])
     }
   });
+
+  const updateMutation = useMutation(updateCartItem, {
+    onError: (error) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      console.log('i was successful');
+      console.log(data);
+      queryClient.invalidateQueries(['cart'])
+    }
+  })
+
 
   // const handleSubmit = () => {
   //   const isEmptyAddress = shippingAddresses.length < 1 ? true : false;
@@ -75,20 +87,15 @@ export default function CartScreen({navigation}) {
   //   }
   // };
 
-  const dispatch = useDispatch();
-
-  const handleDecrease = item => {
-    const {category, id, unitPrice, totalPrice} = item;
-    dispatch(reduceItemQty({category, productId: id, unitPrice, totalPrice}));
-  };
-
-  const handleIncrease = item => {
-    const {category, id, unitPrice, totalPrice} = item;
-    dispatch(increaseItemQty({category, productId: id, unitPrice, totalPrice}));
-  };
-
+  const handleUpdate = (action, id, quantity) => {
+    if (action === '+') {
+      updateMutation.mutate({cartItemId: id, quantity: quantity + 1})
+    } else if (action === '-') {
+      updateMutation.mutate({cartItemId: id, quantity: quantity - 1})
+    }
+  }
   const handleRemoveItem = id => {
-    mutation.mutate(id)
+    deleteMutation.mutate(id)
   };
 
   const renderItem = ({ item }) => {
@@ -105,8 +112,8 @@ export default function CartScreen({navigation}) {
             <CustomUnitControl
               qty={quantity}
               style={styles.split}
-              handleDecrease={() => handleDecrease(item)}
-              handleIncrease={() => handleIncrease(item)}
+              handleIncrease={() => handleUpdate(action= '+', id, quantity)}
+              handleDecrease={() => handleUpdate(action= '-', id, quantity)}
             />
           </View>
         </View>
