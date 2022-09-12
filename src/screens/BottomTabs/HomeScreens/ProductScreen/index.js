@@ -12,10 +12,12 @@ import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
 import {useSelector, useDispatch} from 'react-redux'
-import {addToCart} from '@store/slices/cart';
+// import {addToCart} from '@store/slices/cart';
 import { addToFav, removeFromFav } from '@store/slices/favourite';
-import { useQuery } from '@tanstack/react-query';
-import {getProductById } from '@store/api/product';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getProductById } from '@store/api/product';
+import { addToCart } from '@store/api/cart';
+import {queryClient} from '../../../../../App'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -60,6 +62,23 @@ export default function ProductScreen({route, navigation}) {
     console.log('error.product', error)
   }
 
+  const { data: addToCartData, error: addToCartError, mutate } = useMutation(() => addToCart({ productId, quantity: qty }), {
+    onSuccess: () => {
+      console.log('i was successful');
+      queryClient.invalidateQueries(['cart'])
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  if (addToCartData) {
+    console.log('data.addToCart', addToCartData)
+  
+  } else {
+    console.log('error.addToCart', addToCartError)
+  }
+
   if (isLoading) {
     return <Text>Loading...</Text>
   }
@@ -100,9 +119,9 @@ export default function ProductScreen({route, navigation}) {
     }
   };
 
-  const handleAdd = () => {
-    dispatch(addToCart({productId, quantity: qty}));
-  };
+  // const handleAdd = () => {
+  //   dispatch(addToCart({productId, quantity: qty}));
+  // };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -189,7 +208,7 @@ export default function ProductScreen({route, navigation}) {
           ]}
           titleStyle={styles.buttonText}
           disabled={!isAvailable ? true : false}
-          handlePress={handleAdd}
+          handlePress={mutate}
         />
       </View>
     </SafeAreaView>
