@@ -1,6 +1,4 @@
-import { API_URL } from '@env';
-
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxZTY0Njg3LTllODktNDUyYy1iMDdiLTVmMmQ4Mjg3YWZhZiIsImlhdCI6MTY2MjY1ODI5OCwiZXhwIjoxNjYyNzQ0Njk4fQ.ZWFSHDTygCr4FWuYjQ2_hGMgVrZsnqUrkHHYpzKiPuA'
+import { API_URL, token } from '@env';
 
 const getUserCart = async () => {
   const response = await fetch(`${API_URL}/cart`, {
@@ -19,6 +17,46 @@ const getUserCart = async () => {
   const cart = resData.data
   console.log('request.cart', resData.data)
   return cart;
+};
+
+const addToCart = async ({ productId, quantity }) => {
+  console.log(productId);
+  console.log('qty', quantity)
+  const response = await fetch(`${API_URL}/cart`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      productId,
+      quantity
+    })
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    console.log('error.response', resData)
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  console.log('response.addToCart', resData);
+  return resData;
 }
 
-export {getUserCart}
+const removeFromCart = async (cartItemId) => {
+  const response = await fetch(`${API_URL}/cart/${cartItemId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  return resData;
+}
+
+export {getUserCart, addToCart, removeFromCart}
