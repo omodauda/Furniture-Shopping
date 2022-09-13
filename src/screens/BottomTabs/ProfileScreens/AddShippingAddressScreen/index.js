@@ -16,8 +16,11 @@ import axios from 'axios';
 import {addShippingAddressValidationSchema} from '@validations/AddShippingAddressValidation';
 import CountryModal from '@components/CountryModal';
 import CitiesModal from '@components/CitiesModal';
-import {useDispatch} from 'react-redux';
-import {addShippingAddress} from '@store/slices/user';
+import { addShippingAddress } from '@store/slices/user';
+import { useMutation } from '@tanstack/react-query';
+import { addUserAddress } from '@store/api/address';
+import { queryClient } from '../../../../../App';
+
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -32,6 +35,32 @@ export default function AddShippingAddressScreen({navigation}) {
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+
+  const addressMutation = useMutation(addUserAddress, {
+    onMutate: async (newAddress) => {
+      await queryClient.cancelQueries(['address']);
+      // snapshot previous value
+      const previousAddress = queryClient.getQueryData(['address']);
+      // optimistically update new value
+      queryClient.setQueryData(['address'], old => [...old, newAddress]);
+      // return a context object with the snapshot value
+      return {previousAddress}
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    onError: (error, newAddress, context) => {
+      console.log('error.addAddress', error);
+      queryClient.setQueryData(['address'], context.previousAddress)
+    },
+    onSuccess: (data) => {
+      console.log('i was successful')
+      console.log('data.addAddress', data)
+      navigation.goBack();
+    },
+    // Always refetch after error or success
+    onSettled: () => {
+      queryClient.invalidateQueries(['address'])
+    }
+  })
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -74,13 +103,10 @@ export default function AddShippingAddressScreen({navigation}) {
     setIsCityModalVisible(!isCityModalVisible);
   };
 
-  const dispatch = useDispatch();
+  
   const handleAddAddress = values => {
-    const {fullName, address, country, city, postalCode} = values;
-    dispatch(
-      addShippingAddress({fullName, address, country, city, postalCode}),
-    );
-    navigation.goBack();
+    const { fullName, address, country, city, postalCode } = values;
+    addressMutation.mutate({ fullName, address, country, city, postalCode });
   };
 
   return (
