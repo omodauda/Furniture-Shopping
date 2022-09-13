@@ -64,7 +64,7 @@ export default function ShippingAddresses({navigation}) {
 							isDefault ? <AntDesign name='check' size={20} color={COLORS.white} /> : null
 						}
           </TouchableOpacity>
-          <Text style={styles.sectionHeaderText}>Use as the shipping address</Text>
+          <Text style={styles.sectionHeaderText}>Use as the default shipping address</Text>
         </View>
         <View style={styles.card}>
           <View style={styles.topCard}>
@@ -100,7 +100,7 @@ export default function ShippingAddresses({navigation}) {
           <>
             <FlatList
               data={data}
-              keyExtractor={item => item.id}
+              keyExtractor={(_, index)=> index}
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
             />
