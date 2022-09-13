@@ -9,7 +9,8 @@ import {
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import {useSelector} from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import { userProfile } from '@store/api/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,11 +21,23 @@ const IMG_WIDTH = 0.21 * width;
 const ICON_SIZE = 24;
 const ICON_COLOR = COLORS.black3;
 
+const defaultImage = 'https://res.cloudinary.com/omodauda/image/upload/v1663091784/furniture-shopping/placeholder_msdoua.png'
+
 export default function ProfileScreen({navigation}) {
-  const USER = useSelector(state => state.user);
-  const ORDERS = useSelector(state => state.orders);
-  const {name, email, image, shippingAddresses, paymentMethods, reviews} = USER;
-  const {orders} = ORDERS;
+  const { data, error, isLoading } = useQuery(['profile'], () => userProfile(), { enabled: true, retry: true });
+  if (data) {
+    console.log('data.profile', data)
+  }
+  if (error) {
+    console.log('error.profile', error)
+  }
+
+  if (isLoading) {
+    return <Text>Loading....</Text>
+  }
+
+  const {fullName, email, photo, addresses, orders} = data;
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
@@ -47,10 +60,14 @@ export default function ProfileScreen({navigation}) {
                 borderRadius: IMG_WIDTH / 2,
               },
             ]}>
-            <Image style={styles.image} source={image} resizeMode="cover" />
+            <Image
+              style={styles.image}
+              source={{uri: photo === null ? defaultImage : photo}}
+              resizeMode="cover"
+            />
           </View>
           <View>
-            <Text style={styles.boldText}>{name}</Text>
+            <Text style={styles.boldText}>{fullName}</Text>
             <Text style={styles.label}>{email}</Text>
           </View>
         </View>
@@ -71,8 +88,8 @@ export default function ProfileScreen({navigation}) {
           <View>
             <Text style={styles.boldText}>shipping Addresses</Text>
             <Text style={styles.label}>
-              {shippingAddresses.length}{' '}
-              {shippingAddresses.length > 1 ? 'Addresses' : 'Address'}
+              {addresses.length}{' '}
+              {addresses.length > 1 ? 'Addresses' : 'Address'}
             </Text>
           </View>
           <TouchableOpacity
@@ -81,7 +98,7 @@ export default function ProfileScreen({navigation}) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>Payment Methods</Text>
             <Text style={styles.label}>
@@ -93,9 +110,9 @@ export default function ProfileScreen({navigation}) {
             onPress={() => navigation.navigate('PaymentMethod')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View>
             <Text style={styles.boldText}>My reviews</Text>
             <Text style={styles.label}>
@@ -106,7 +123,7 @@ export default function ProfileScreen({navigation}) {
           <TouchableOpacity onPress={() => navigation.navigate('MyReviews')}>
             <AntDesign name="right" size={ICON_SIZE} color={COLORS.gray} />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.section}>
           <View>
