@@ -3,25 +3,40 @@ import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
 import COLORS from '@constants/Colors'
-import {useSelector} from 'react-redux'
+import { useQuery } from '@tanstack/react-query';
+import { getUserAddress } from '@store/api/address';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default function ShippingAddresses({navigation}) {
-	const USER = useSelector(state => state.user)
-  const {shippingAddresses} = USER;
-	const [defaultAddress, setDefaultAddress] = useState('1');
+  const { data, isLoading, error } = useQuery(['address'], () => getUserAddress(), {retry: true});
+
+  if (data) {
+    console.log('data.address', data);
+  }
+
+  if (error) {
+    console.log('error.address', error);
+  }
+
+  if (isLoading) {
+    return (
+      <Text>Loading....</Text>
+    )
+  }
+
+
+	// const [defaultAddress, setDefaultAddress] = useState('1');
 
 	const handlePress = (id) => {
-		setDefaultAddress(id)
+		// setDefaultAddress(id)
   }
   
-  const isEmptyList = shippingAddresses.length < 1 ? true : false;
+  const isEmptyList = data.length < 1 ? true : false;
 
 	const renderItem = ({item}) => {
-		const {fullName, address, country, city, postalCode} = item;
-		const isDefaultAddress = item.id === defaultAddress;
+		const {fullName, address, country, city, postalCode, isDefault} = item;
+	
 		return (
 			<View style={styles.section}>
         <View style={styles.sectionHeader}>
@@ -29,15 +44,15 @@ export default function ShippingAddresses({navigation}) {
 						style={[
 							styles.checkBox,
 							{
-								backgroundColor: isDefaultAddress ? COLORS.black : COLORS.white,
-								borderWidth: isDefaultAddress ? 0 : 1.5,
-								borderColor: isDefaultAddress ? null : COLORS.gray2
+								backgroundColor: isDefault ? COLORS.black : COLORS.white,
+								borderWidth: isDefault ? 0 : 1.5,
+								borderColor: isDefault ? null : COLORS.gray2
 							}
 						]}
 						onPress={() => handlePress(item.id)}
 					>
 						{
-							isDefaultAddress ? <AntDesign name='check' size={20} color={COLORS.white} /> : null
+							isDefault ? <AntDesign name='check' size={20} color={COLORS.white} /> : null
 						}
           </TouchableOpacity>
           <Text style={styles.sectionHeaderText}>Use as the shipping address</Text>
@@ -75,7 +90,7 @@ export default function ShippingAddresses({navigation}) {
           :
           <>
             <FlatList
-              data={shippingAddresses}
+              data={data}
               keyExtractor={item => item.id}
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
