@@ -3,8 +3,9 @@ import React, {useState} from 'react'
 import styles from './styles'
 import StackScreenHeader from '@components/StackScreenHeader'
 import COLORS from '@constants/Colors'
-import { useQuery } from '@tanstack/react-query';
-import { getUserAddress } from '@store/api/address';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getUserAddress, setDefaultAddress } from '@store/api/address';
+import { queryClient } from '../../../../../App';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -19,23 +20,31 @@ export default function ShippingAddresses({navigation}) {
     console.log('error.address', error);
   }
 
+  const defaultAddressMutation = useMutation(setDefaultAddress, {
+     onError: (error) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      console.log('i was successful');
+      console.log(data);
+      queryClient.invalidateQueries(['address'])
+    }
+  })
+
   if (isLoading) {
     return (
       <Text>Loading....</Text>
     )
   }
 
-
-	// const [defaultAddress, setDefaultAddress] = useState('1');
-
-	const handlePress = (id) => {
-		// setDefaultAddress(id)
+  const handlePress = (id) => {
+    defaultAddressMutation.mutate(id)
   }
   
   const isEmptyList = data.length < 1 ? true : false;
 
 	const renderItem = ({item}) => {
-		const {fullName, address, country, city, postalCode, isDefault} = item;
+		const {id, fullName, address, country, city, postalCode, isDefault} = item;
 	
 		return (
 			<View style={styles.section}>
@@ -49,7 +58,7 @@ export default function ShippingAddresses({navigation}) {
 								borderColor: isDefault ? null : COLORS.gray2
 							}
 						]}
-						onPress={() => handlePress(item.id)}
+						onPress={() => handlePress(id)}
 					>
 						{
 							isDefault ? <AntDesign name='check' size={20} color={COLORS.white} /> : null
