@@ -19,4 +19,22 @@ const getUserAddress = async () => {
   return address;
 };
 
-export {getUserAddress}
+const setDefaultAddress = async (id) => {
+  const response = await fetch(`${API_URL}/user/address/default/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    console.log('error.response', resData)
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  console.log('request.default-address', resData.message)
+  return resData.message;
+}
+
+export {getUserAddress, setDefaultAddress}
