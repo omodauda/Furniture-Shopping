@@ -1,6 +1,8 @@
-import { API_URL, token } from '@env';
+import { API_URL } from '@env';
+import {fetchStorage} from '@store/api/asyncStorage'
 
 const getUserCart = async () => {
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/cart`, {
     method: 'GET',
     headers: {
@@ -20,8 +22,7 @@ const getUserCart = async () => {
 };
 
 const addToCart = async ({ productId, quantity }) => {
-  console.log(productId);
-  console.log('qty', quantity)
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/cart`, {
     method: 'POST',
     headers: {
@@ -44,6 +45,7 @@ const addToCart = async ({ productId, quantity }) => {
 }
 
 const removeFromCart = async (cartItemId) => {
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/cart/${cartItemId}`, {
     method: 'DELETE',
     headers: {
@@ -60,7 +62,7 @@ const removeFromCart = async (cartItemId) => {
 }
 
 const updateCartItem = async ({ cartItemId, quantity }) => {
-  console.log('cartItemId', cartItemId)
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/cart/${cartItemId}`, {
     method: 'PATCH',
     headers: {
