@@ -1,4 +1,5 @@
-import {API_URL } from '@env';
+import { API_URL } from '@env';
+import {storeData} from '@store/api/asyncStorage'
 
 const userSignUp = async ({ fullName, email, password }) => {  
   const response = await fetch(`${API_URL}/user/signup`, {
@@ -17,11 +18,10 @@ const userSignUp = async ({ fullName, email, password }) => {
     throw new Error(resData.message);
   }
   const resData = await response.json();
-  return resData;
+  return resData.message;
 }
 
 const userLogin = async ({ email, password }) => {
-  console.log('api was called')
   const response = await fetch(`${API_URL}/user/login`, {
     method: 'POST',
     headers: {
@@ -38,25 +38,8 @@ const userLogin = async ({ email, password }) => {
     throw new Error(resData.message);
   }
   const resData = await response.json();
-  // console.log('request', resData)
-  return resData;
-}
+  await storeData('token', resData.token)
+  return resData.data;
+};
 
 export {userSignUp, userLogin}
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-// export const userApi = createApi({
-//   reducerPath: 'userApi',
-//   baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/user` }),
-//   endpoints: (builder) => ({
-//     login: builder.query({
-//       query: ({ email, password }) => ({
-//         method: 'POST',
-//         body: {email, password}
-//       })
-//     })
-//   })
-// })
-
-
-// export const { useLoginQuery } = userApi;
