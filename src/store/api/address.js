@@ -1,6 +1,8 @@
-import { API_URL, token } from '@env';
+import { API_URL } from '@env';
+import {fetchStorage} from '@store/api/asyncStorage'
 
 const getUserAddress = async () => {
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/user/address`, {
     method: 'GET',
     headers: {
@@ -20,6 +22,7 @@ const getUserAddress = async () => {
 };
 
 const setDefaultAddress = async (id) => {
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/user/address/default/${id}`, {
     method: 'PATCH',
     headers: {
@@ -38,6 +41,7 @@ const setDefaultAddress = async (id) => {
 };
 
 const addUserAddress = async ({ fullName, address, postalCode, country, city }) => {
+  const token = await fetchStorage('token');
   const response = await fetch(`${API_URL}/user/address`, {
     method: 'POST',
     headers: {
