@@ -1,5 +1,5 @@
 import { API_URL } from '@env';
-import {storeData} from '@store/api/asyncStorage'
+import {storeData, fetchStorage} from '@store/api/asyncStorage'
 
 const userSignUp = async ({ fullName, email, password }) => {  
   const response = await fetch(`${API_URL}/user/signup`, {
@@ -42,4 +42,22 @@ const userLogin = async ({ email, password }) => {
   return resData.data;
 };
 
-export {userSignUp, userLogin}
+const userProfile = async () => {
+  const token = await fetchStorage('token');
+  const response = await fetch(`${API_URL}/user/profile`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    console.log('error.response', resData)
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  return resData.data;
+};
+
+export {userSignUp, userLogin, userProfile}
