@@ -35,6 +35,31 @@ const setDefaultAddress = async (id) => {
   const resData = await response.json();
   console.log('request.default-address', resData.message)
   return resData.message;
+};
+
+const addUserAddress = async ({ fullName, address, postalCode, country, city }) => {
+  const response = await fetch(`${API_URL}/user/address`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      fullName,
+      address,
+      postalCode,
+      country,
+      city
+    })
+  });
+  if (!response.ok) {
+    const resData = await response.json();
+    console.log('error.response', resData)
+    throw new Error(resData.message);
+  }
+  const resData = await response.json();
+  console.log('request.addAddress', resData.message)
+  return resData.message;
 }
 
-export {getUserAddress, setDefaultAddress}
+export {getUserAddress, setDefaultAddress, addUserAddress}
