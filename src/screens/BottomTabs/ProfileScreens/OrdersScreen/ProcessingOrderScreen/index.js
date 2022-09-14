@@ -1,15 +1,32 @@
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import OrdersList from '../OrdersList';
-import {useSelector} from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import {getOrders } from '@store/api/order';
 
 export default function ProcessingOrderScreen() {
-  const Orders = useSelector(state => state.orders.orders);
-  const data = Orders.filter(order => order.status === 'Processing');
+  const orderStatus = 'Processing';
+  const { data, error, isLoading } = useQuery(['order', { status: orderStatus }], () => getOrders(orderStatus),
+    {
+      enabled: true,
+      retry: true
+    }
+  );
+
+  if (data) {
+    console.log('data.order.processing', data)
+  }
+  if (error) {
+    console.log('error.order.processing', error)
+  }
+
+  if (isLoading) {
+    return <Text>Loading....</Text>
+  }
   return (
     <View style={styles.screen}>
-      <OrdersList data={data} status="Processing" />
+      <OrdersList data={data} status={orderStatus} />
     </View>
   );
 }
