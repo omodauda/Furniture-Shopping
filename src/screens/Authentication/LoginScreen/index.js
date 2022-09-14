@@ -22,7 +22,7 @@ export default function LoginScreen({navigation}) {
     onSuccess: (data) => {
       console.log('i was successful');
       console.log(data);
-      navigation.navigate('Main')
+      navigation.navigate('Main', { screen: 'Home' })
     }
   })
 
