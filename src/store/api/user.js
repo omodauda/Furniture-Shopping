@@ -1,4 +1,4 @@
-import { API_URL } from '@env';
+import { API_URL } from '@constants/url';
 import {storeData, fetchStorage} from '@store/api/asyncStorage'
 
 const userSignUp = async ({ fullName, email, password }) => {  

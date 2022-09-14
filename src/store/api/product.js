@@ -1,4 +1,4 @@
-import {API_URL } from '@env';
+import { API_URL } from '@constants/url';
 
 const getCategories = async (name) => {
   const response = await fetch(`${API_URL}/product/categories?name=${name}`, {
