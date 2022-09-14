@@ -11,6 +11,7 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import { useQuery } from '@tanstack/react-query';
 import { userProfile } from '@store/api/user';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,18 +37,29 @@ export default function ProfileScreen({navigation}) {
     return <Text>Loading....</Text>
   }
 
-  const {fullName, email, photo, addresses, orders} = data;
+  const { fullName, email, photo, addresses, orders } = data;
+  
+  const handleLogout = async() => {
+    try {
+      await AsyncStorage.removeItem('token');
+      navigation.navigate('Auth', {screen: 'Login'})
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <Feather name="search" color={ICON_COLOR} size={ICON_SIZE} />
         <Text style={styles.headerText}>PROFILE</Text>
-        <MaterialCommunityIcons
-          name="logout"
-          color={ICON_COLOR}
-          size={ICON_SIZE}
-        />
+        <TouchableOpacity onPress={() => handleLogout()}>
+          <MaterialCommunityIcons
+            name="logout"
+            color={ICON_COLOR}
+            size={ICON_SIZE}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.main}>
         <View style={styles.userInfo}>
