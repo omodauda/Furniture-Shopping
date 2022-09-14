@@ -2,6 +2,7 @@ import React from 'react';
 import {FlatList, View, Text, TouchableOpacity, Dimensions} from 'react-native'
 import styles from './styles';
 import COLORS from '@constants/Colors';
+import moment from 'moment';
 
 const {width} = Dimensions.get('screen')
 
@@ -15,7 +16,11 @@ export default function OrdersList({data, status}) {
     status === 'Processing' && COLORS.gold;
 
 	const renderItem = ({item}) => {
-    const {orderNo, date, quantity, totalAmount} = item;
+    const { orderNo, orderItems, total, createdAt } = item;
+    const quantity = orderItems.length;
+    const isoDate = moment(createdAt);
+    const date = isoDate.utc().format('DD/MM/YYYY');
+
     return (
       <View style={[styles.item, { width: ITEM_WIDTH}]}>
         <View style={styles.texts}>
@@ -28,7 +33,7 @@ export default function OrdersList({data, status}) {
             <Text style={[styles.value]}> {quantity}</Text>
           </Text>
           <Text style={[styles.value, styles.label]}>Total Amount:
-            <Text style={styles.value}> ${totalAmount}</Text>
+            <Text style={styles.value}> ${total}</Text>
           </Text>
         </View>
         <View style={styles.footer}>
