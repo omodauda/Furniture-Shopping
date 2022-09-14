@@ -1,12 +1,29 @@
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import OrdersList from '../OrdersList';
-import {useSelector} from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import {getOrders } from '@store/api/order';
 
 export default function CanceledOrderScreen() {
-  const Orders = useSelector(state => state.orders.orders);
-  const data = Orders.filter(order => order.status === 'Canceled');
+  const orderStatus = 'Cancelled';
+  const { data, error, isLoading } = useQuery(['order', { status: orderStatus }], () => getOrders(orderStatus),
+    {
+      enabled: true,
+      retry: true
+    }
+  );
+
+  if (data) {
+    console.log('data.order.cancelled', data)
+  }
+  if (error) {
+    console.log('error.order.cancelled', error)
+  }
+
+  if (isLoading) {
+    return <Text>Loading....</Text>
+  }
   return (
     <View style={styles.screen}>
       <OrdersList data={data} status="Canceled" />
