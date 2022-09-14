@@ -76,8 +76,8 @@ export default function ProfileScreen({navigation}) {
           <View>
             <Text style={styles.boldText}>My orders</Text>
             <Text style={styles.label}>
-              Already have {orders.length}{' '}
-              {orders.length > 1 ? 'orders' : 'order'}
+              Already have {orders}{' '}
+              {orders > 1 ? 'orders' : 'order'}
             </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyOrders')}>
@@ -88,8 +88,8 @@ export default function ProfileScreen({navigation}) {
           <View>
             <Text style={styles.boldText}>shipping Addresses</Text>
             <Text style={styles.label}>
-              {addresses.length}{' '}
-              {addresses.length > 1 ? 'Addresses' : 'Address'}
+              {addresses}{' '}
+              {addresses > 1 ? 'Addresses' : 'Address'}
             </Text>
           </View>
           <TouchableOpacity
