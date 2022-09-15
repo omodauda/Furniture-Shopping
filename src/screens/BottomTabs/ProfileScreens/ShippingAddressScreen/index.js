@@ -6,6 +6,7 @@ import COLORS from '@constants/Colors'
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getUserAddress, setDefaultAddress } from '@store/api/address';
 import { queryClient } from '../../../../../App';
+import Loader from '@components/Loader'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -32,9 +33,7 @@ export default function ShippingAddresses({navigation}) {
   })
 
   if (isLoading) {
-    return (
-      <Text>Loading....</Text>
-    )
+    return <Loader />
   }
 
   const handlePress = (id) => {
