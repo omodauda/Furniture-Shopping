@@ -7,22 +7,22 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import TabCustomHeader from '@components/TabCustomHeader';
-// import { useSelector, useDispatch } from 'react-redux';
 import { setProducts } from '@store/slices/products';
 import { addToFav } from '@store/slices/favourite';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@store/api/product';
 
 // icons
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import Loader from '@components/Loader';
 
 const {width, height} = Dimensions.get('window');
 
@@ -88,11 +88,9 @@ const DATA = [
 
 export default function HomeScreen({ navigation }) {
   
-  const [selectedId, setSelectedId] = useState('Chair');
-
-  // const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState('Chair');
   
-  const { data, error, isLoading, refetch } = useQuery(['product', selectedId], () => getCategories(selectedId), { enabled: true, retry: false });
+  const { data, error, isLoading } = useQuery(['product', selectedCategory], () => getCategories(selectedCategory), { enabled: true, retry: true });
 
   
   if (data) {
@@ -103,19 +101,18 @@ export default function HomeScreen({ navigation }) {
   }
   
   const handleItemPress = title => {
-    setSelectedId(title);
+    setSelectedCategory(title);
   };
-
   
   const favItem = item => {
     // dispatch(addToFav({category: selectedCategory, productId: item.id}));
   };
 
-  const renderItem = ({item}) => {
+  const RenderItem = ({ item }) => {
     const backgroundColor =
-      item.title === selectedId ? COLORS.black : COLORS.blurGray;
+      item.title === selectedCategory ? COLORS.black : COLORS.blurGray;
 
-    const labelColor = item.title === selectedId ? COLORS.black : COLORS.gray;
+    const labelColor = item.title === selectedCategory ? COLORS.black : COLORS.gray;
 
     // ITEM_ICON_COLOR = selectedId === item.id ? COLORS.white : COLORS.gray;
 
@@ -187,8 +184,13 @@ export default function HomeScreen({ navigation }) {
           </Text>
         </View>
       </TabCustomHeader>
-      <View>
-        <FlatList
+      <View style={styles.categoryList}>
+        {
+          DATA.map(category => {
+            return <RenderItem item={category} key={category.id} />
+          })
+        }
+        {/* <FlatList
           contentContainerStyle={styles.list}
           data={DATA}
           renderItem={renderItem}
@@ -196,16 +198,19 @@ export default function HomeScreen({ navigation }) {
           extraData={selectedId}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-        />
+        /> */}
       </View>
       <View style={styles.productList}>
-        <FlatList
-          data={data}
-          renderItem={productList}
-          key={item => item.id}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-        />
+        {
+          isLoading ? <Loader /> :
+            <FlatList
+              data={data}
+              renderItem={productList}
+              key={item => item.id}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+            />
+        }
       </View>
     </SafeAreaView>
   );
