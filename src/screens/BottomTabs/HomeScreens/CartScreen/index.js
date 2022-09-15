@@ -21,7 +21,8 @@ import {
 } from '@store/slices/cart';
 import { getUserCart, removeFromCart, updateCartItem } from '@store/api/cart';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import {queryClient} from '../../../../../App'
+import { queryClient } from '../../../../../App'
+import Loader  from '@components/Loader';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -77,13 +78,13 @@ export default function CartScreen({navigation}) {
     deleteMutation.mutate(id)
   };
 
-  if (isLoading) {
-    return <Text>Loading...</Text>
-  }
+  // if (isLoading) {
+  //   return <Text>Loading...</Text>
+  // }
 
-  const {cart, total } = data;
+  // const {cart, total } = data;
 
-  const isEmptyCart = data.cart.length < 1 ? true : false;
+  // const isEmptyCart = data.cart.length < 1 ? true : false;
 
   
 
@@ -100,6 +101,19 @@ export default function CartScreen({navigation}) {
   //     navigation.navigate('CheckOut');
   //   }
   // };
+  const Empty = () => (
+    <View style={styles.emptyView}>
+      <MaterialIcons
+        name="add-shopping-cart"
+        size={200}
+        color={COLORS.black}
+      />
+      <Text style={styles.emptyTextBold}>Your Cart is Empty</Text>
+      <Text style={styles.emptyDesc}>
+        Looks like you haven't added anything to your cart yet
+      </Text>
+    </View>
+  )
 
   const renderItem = ({ item }) => {
     const { id, product: {name, images, quantity: itemUnit, price}, quantity} = item;
@@ -132,51 +146,45 @@ export default function CartScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screen}>
       <StackScreenHeader navigation={navigation} title="MY CART" />
-       {isEmptyCart ? (
-        <View style={styles.emptyView}>
-          <MaterialIcons
-            name="add-shopping-cart"
-            size={200}
-            color={COLORS.black}
-          />
-          <Text style={styles.emptyTextBold}>Your Cart is Empty</Text>
-          <Text style={styles.emptyDesc}>
-            Looks like you haven't added anything to your cart yet
-          </Text>
-        </View>
-      ) : (
-        <>
-          <View style={styles.list}>
-            <FlatList
-              data={cart}
-              keyExtractor={item => item.id}
-              renderItem={renderItem}
-              showsVerticalScrollIndicator={false}
+      {
+        isLoading ? <Loader /> :
+        data.cart.length < 0 ? <Empty /> :
+        data.cart.length > 0 ?
+        (
+          <>
+            <View style={styles.list}>
+              <FlatList
+                data={data.cart}
+                keyExtractor={item => item.id}
+                renderItem={renderItem}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+            <View style={styles.promo}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your promo code"
+                placeholderTextColor={COLORS.gray2}
+              />
+              <TouchableOpacity style={styles.iconwrapper}>
+                <Ionicons name="chevron-forward" size={25} color={COLORS.white} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.total}>
+              <Text style={[styles.totalText, {color: COLORS.gray}]}>Total:</Text>
+              <Text style={[styles.totalText, {color: COLORS.black}]}>
+                $ {data.total}.00
+              </Text>
+            </View>
+            <CustomButton
+              title="CHECK OUT"
+              btnStyle={styles.btn}
+              titleStyle={styles.btnText}
             />
-          </View>
-          <View style={styles.promo}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your promo code"
-              placeholderTextColor={COLORS.gray2}
-            />
-            <TouchableOpacity style={styles.iconwrapper}>
-              <Ionicons name="chevron-forward" size={25} color={COLORS.white} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.total}>
-            <Text style={[styles.totalText, {color: COLORS.gray}]}>Total:</Text>
-            <Text style={[styles.totalText, {color: COLORS.black}]}>
-              $ {total}.00
-            </Text>
-          </View>
-          <CustomButton
-            title="CHECK OUT"
-            btnStyle={styles.btn}
-            titleStyle={styles.btnText}
-          />
-        </>
-      )}
+          </>
+        ) :
+        <Empty />
+      }
     </SafeAreaView>
   );
 }
