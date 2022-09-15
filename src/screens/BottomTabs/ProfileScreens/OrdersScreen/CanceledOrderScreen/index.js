@@ -3,7 +3,8 @@ import React from 'react';
 import styles from './styles';
 import OrdersList from '../OrdersList';
 import { useQuery } from '@tanstack/react-query';
-import {getOrders } from '@store/api/order';
+import { getOrders } from '@store/api/order';
+import Loader from '@components/Loader';
 
 export default function CanceledOrderScreen() {
   const orderStatus = 'Cancelled';
@@ -22,7 +23,7 @@ export default function CanceledOrderScreen() {
   }
 
   if (isLoading) {
-    return <Text>Loading....</Text>
+    return <Loader />
   }
   return (
     <View style={styles.screen}>
