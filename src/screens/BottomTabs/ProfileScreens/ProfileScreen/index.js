@@ -12,6 +12,7 @@ import COLORS from '@constants/Colors';
 import { useQuery } from '@tanstack/react-query';
 import { userProfile } from '@store/api/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '@components/Loader';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -34,7 +35,7 @@ export default function ProfileScreen({navigation}) {
   }
 
   if (isLoading) {
-    return <Text>Loading....</Text>
+    return <Loader />
   }
 
   const { fullName, email, photo, addresses, orders } = data;
