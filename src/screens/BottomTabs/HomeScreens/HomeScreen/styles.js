@@ -22,8 +22,13 @@ const styles = StyleSheet.create({
     color: COLORS.black,
   },
   wrapper: {
-    marginRight: 25,
+    // marginRight: 25,
     alignItems: 'center',
+  },
+  categoryList: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'space-between'
   },
   list: {
     paddingHorizontal: 20,
