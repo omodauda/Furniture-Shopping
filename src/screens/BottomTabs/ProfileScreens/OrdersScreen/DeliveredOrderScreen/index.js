@@ -3,7 +3,8 @@ import React from 'react';
 import styles from './styles';
 import OrdersList from '../OrdersList';
 import { useQuery } from '@tanstack/react-query';
-import {getOrders } from '@store/api/order';
+import { getOrders } from '@store/api/order';
+import Loader from '@components/Loader';
 
 export default function DeliveredOrderScreen() {
   const orderStatus = 'Delivered';
@@ -22,7 +23,7 @@ export default function DeliveredOrderScreen() {
   }
 
   if (isLoading) {
-    return <Text>Loading....</Text>
+    return <Loader />
   }
   return (
     <View style={styles.screen}>
