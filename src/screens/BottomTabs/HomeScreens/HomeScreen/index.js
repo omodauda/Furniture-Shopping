@@ -27,8 +27,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Loader from '@components/Loader';
 
 const {width, height} = Dimensions.get('window');
-console.log('width', width);
-console.log('height', height);
 
 const ICON_SIZE = 20;
 const ITEM_ICON_COLOR = COLORS.white;

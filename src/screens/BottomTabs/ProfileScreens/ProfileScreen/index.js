@@ -9,10 +9,11 @@ import {
 import React from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
-import { useQuery } from '@tanstack/react-query';
-import { userProfile } from '@store/api/user';
+import {useQuery} from '@tanstack/react-query';
+import {userProfile} from '@store/api/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '@components/Loader';
+import {showMessage} from 'react-native-flash-message';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,31 +24,39 @@ const IMG_WIDTH = 0.21 * width;
 const ICON_SIZE = 24;
 const ICON_COLOR = COLORS.black3;
 
-const defaultImage = 'https://res.cloudinary.com/omodauda/image/upload/v1663091784/furniture-shopping/placeholder_msdoua.png'
+const defaultImage =
+  'https://res.cloudinary.com/omodauda/image/upload/v1663091784/furniture-shopping/placeholder_msdoua.png';
 
 export default function ProfileScreen({navigation}) {
-  const { data, error, isLoading } = useQuery(['profile'], () => userProfile(), { enabled: true, retry: true });
+  const {data, error, isLoading} = useQuery(['profile'], () => userProfile(), {
+    enabled: true,
+    retry: true,
+  });
   if (data) {
-    console.log('data.profile', data)
+    console.log('data.profile', data);
   }
   if (error) {
-    console.log('error.profile', error)
+    showMessage({
+      message: 'Error',
+      description: error,
+      type: 'danger',
+    });
   }
 
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
-  const { fullName, email, photo, addresses, orders } = data;
-  
-  const handleLogout = async() => {
+  const {fullName, email, photo, addresses, orders} = data;
+
+  const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('token');
-      navigation.navigate('Auth', {screen: 'Login'})
+      navigation.navigate('Auth', {screen: 'Login'});
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -89,8 +98,7 @@ export default function ProfileScreen({navigation}) {
           <View>
             <Text style={styles.boldText}>My orders</Text>
             <Text style={styles.label}>
-              Already have {orders}{' '}
-              {orders > 1 ? 'orders' : 'order'}
+              Already have {orders} {orders > 1 ? 'orders' : 'order'}
             </Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MyOrders')}>
@@ -101,8 +109,7 @@ export default function ProfileScreen({navigation}) {
           <View>
             <Text style={styles.boldText}>shipping Addresses</Text>
             <Text style={styles.label}>
-              {addresses}{' '}
-              {addresses > 1 ? 'Addresses' : 'Address'}
+              {addresses} {addresses > 1 ? 'Addresses' : 'Address'}
             </Text>
           </View>
           <TouchableOpacity

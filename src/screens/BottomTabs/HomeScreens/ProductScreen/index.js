@@ -11,13 +11,15 @@ import styles from './styles';
 import COLORS from '@constants/Colors';
 import CustomButton from '@components/CustomButton';
 import CustomUnitControl from '@components/CustomUnitControl';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux';
 // import {addToCart} from '@store/slices/cart';
-import { addToFav, removeFromFav } from '@store/slices/favourite';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { getProductById } from '@store/api/product';
-import { addToCart } from '@store/api/cart';
-import {queryClient} from '../../../../../App'
+import {addToFav, removeFromFav} from '@store/slices/favourite';
+import {useQuery, useMutation} from '@tanstack/react-query';
+import {getProductById} from '@store/api/product';
+import {addToCart} from '@store/api/cart';
+import {queryClient} from '../../../../../App';
+import Loader from '@components/Loader';
+import {showMessage} from 'react-native-flash-message';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -54,33 +56,49 @@ export default function ProductScreen({route, navigation}) {
 
   console.log(productId);
 
-  const { data, error, isLoading, refetch } = useQuery(['product'], () => getProductById(productId), { enabled: true, retry: false});
+  const {data, error, isLoading, refetch} = useQuery(
+    ['product'],
+    () => getProductById(productId),
+    {enabled: true, retry: false},
+  );
   if (data) {
-    console.log('data.product', data)
-  
-  } else {
-    console.log('error.product', error)
+    console.log('data.product', data);
   }
 
-  const { data: addToCartData, error: addToCartError, mutate } = useMutation(() => addToCart({ productId, quantity: qty }), {
+  if (error) {
+    showMessage({
+      message: 'Error',
+      description: error,
+      type: 'danger',
+    });
+  }
+
+  const {
+    data: addToCartData,
+    error: addToCartError,
+    mutate,
+  } = useMutation(() => addToCart({productId, quantity: qty}), {
     onSuccess: () => {
       console.log('i was successful');
-      queryClient.invalidateQueries(['cart'])
+      queryClient.invalidateQueries(['cart']);
     },
-    onError: (error) => {
-      console.log(error)
-    }
-  })
+    onError: error => {
+      showMessage({
+        message: 'Error',
+        description: error.message,
+        type: 'danger',
+      });
+    },
+  });
 
   if (addToCartData) {
-    console.log('data.addToCart', addToCartData)
-  
+    console.log('data.addToCart', addToCartData);
   } else {
-    console.log('error.addToCart', addToCartError)
+    console.log('error.addToCart', addToCartError);
   }
 
   if (isLoading) {
-    return <Text>Loading...</Text>
+    return <Loader />;
   }
 
   const isAvailable = data.quantity > 0 ? true : false;
@@ -108,7 +126,7 @@ export default function ProductScreen({route, navigation}) {
           {width: SECTION_WIDTH, height: SECTION_HEIGHT},
         ]}>
         <Image
-          source={data.images}
+          source={{uri: data.images[0].url}}
           style={styles.image}
           resizeMethod="scale"
           resizeMode="cover"
