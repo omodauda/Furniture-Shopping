@@ -1,7 +1,7 @@
-import { API_URL } from '@constants/url';
-import {storeData, fetchStorage} from '@store/api/asyncStorage'
+import {API_URL} from '@constants/url';
+import {storeData, fetchStorage} from '@store/api/asyncStorage';
 
-const userSignUp = async ({ fullName, email, password }) => {  
+const userSignUp = async ({fullName, email, password}) => {
   const response = await fetch(`${API_URL}/user/signup`, {
     method: 'POST',
     headers: {
@@ -10,8 +10,8 @@ const userSignUp = async ({ fullName, email, password }) => {
     body: JSON.stringify({
       fullName,
       email,
-      password
-    })
+      password,
+    }),
   });
   if (!response.ok) {
     const resData = await response.json();
@@ -19,9 +19,9 @@ const userSignUp = async ({ fullName, email, password }) => {
   }
   const resData = await response.json();
   return resData.message;
-}
+};
 
-const userLogin = async ({ email, password }) => {
+const userLogin = async ({email, password}) => {
   const response = await fetch(`${API_URL}/user/login`, {
     method: 'POST',
     headers: {
@@ -29,16 +29,15 @@ const userLogin = async ({ email, password }) => {
     },
     body: JSON.stringify({
       email,
-      password
-    })
+      password,
+    }),
   });
   if (!response.ok) {
     const resData = await response.json();
-    console.log('error.response', resData)
     throw new Error(resData.message);
   }
   const resData = await response.json();
-  await storeData('token', resData.token)
+  await storeData('token', resData.token);
   return resData.data;
 };
 
@@ -48,16 +47,15 @@ const userProfile = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!response.ok) {
     const resData = await response.json();
-    console.log('error.response', resData)
     throw new Error(resData.message);
   }
   const resData = await response.json();
   return resData.data;
 };
 
-export {userSignUp, userLogin, userProfile}
+export {userSignUp, userLogin, userProfile};
