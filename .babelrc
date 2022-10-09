@@ -1,7 +1,9 @@
 {
-    "presets": ["module:metro-react-native-babel-preset"],
-    "plugins": [
-      ["module-resolver", {
+  "presets": ["module:metro-react-native-babel-preset"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
         "root": ["./src"],
         "alias": {
           "@assets": "./assets",
@@ -11,8 +13,10 @@
           "@navigations": "./src/navigations",
           "@validations": "./src/validations",
           "@data": "./src/data",
-          "@store": "./src/store"
+          "@store": "./src/store",
+          "@utils": "./src/utils"
         }
-      }]
+      }
     ]
+  ]
 }
