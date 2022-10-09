@@ -11,10 +11,12 @@ import React, {useState} from 'react';
 import styles from './styles';
 import COLORS from '@constants/Colors';
 import TabCustomHeader from '@components/TabCustomHeader';
-import { setProducts } from '@store/slices/products';
-import { addToFav } from '@store/slices/favourite';
-import { useQuery } from '@tanstack/react-query';
-import { getCategories } from '@store/api/product';
+import {setProducts} from '@store/slices/products';
+import {addToFav} from '@store/slices/favourite';
+import {useQuery} from '@tanstack/react-query';
+import {getCategories} from '@store/api/product';
+import {useDispatch} from 'react-redux';
+import {showMessage} from 'react-native-flash-message';
 
 // icons
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -25,6 +27,8 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Loader from '@components/Loader';
 
 const {width, height} = Dimensions.get('window');
+console.log('width', width);
+console.log('height', height);
 
 const ICON_SIZE = 20;
 const ITEM_ICON_COLOR = COLORS.white;
@@ -85,34 +89,41 @@ const DATA = [
   },
 ];
 
-
-export default function HomeScreen({ navigation }) {
-  
+export default function HomeScreen({navigation}) {
   const [selectedCategory, setSelectedCategory] = useState('Chair');
-  
-  const { data, error, isLoading } = useQuery(['product', selectedCategory], () => getCategories(selectedCategory), { enabled: true, retry: true });
 
-  
+  const {data, error, isLoading} = useQuery(
+    ['product', selectedCategory],
+    () => getCategories(selectedCategory),
+    {enabled: true, retry: false},
+  );
+
   if (data) {
-    console.log('data.products', data)
-  
-  } else {
-    console.log('error.products', error)
+    console.log('data.products', data);
   }
-  
+
+  if (error) {
+    showMessage({
+      message: 'Error',
+      description: error,
+      type: 'danger',
+    });
+  }
+
   const handleItemPress = title => {
     setSelectedCategory(title);
   };
-  
-  const favItem = item => {
-    // dispatch(addToFav({category: selectedCategory, productId: item.id}));
+  const dispatch = useDispatch();
+  const favItem = id => {
+    // dispatch(addToFav({category: selectedCategory, productId: id}));
   };
 
-  const RenderItem = ({ item }) => {
+  const RenderItem = ({item}) => {
     const backgroundColor =
       item.title === selectedCategory ? COLORS.black : COLORS.blurGray;
 
-    const labelColor = item.title === selectedCategory ? COLORS.black : COLORS.gray;
+    const labelColor =
+      item.title === selectedCategory ? COLORS.black : COLORS.gray;
 
     // ITEM_ICON_COLOR = selectedId === item.id ? COLORS.white : COLORS.gray;
 
@@ -148,13 +159,12 @@ export default function HomeScreen({ navigation }) {
         ]}>
         <View style={[styles.imageContainer]}>
           <Image
-            source={{ uri: item.images[0].url }}
-            lo
+            source={{uri: item.images[0].url}}
             style={[styles.image, {height: IMG_HEIGHT}]}
             resizeMode="cover"
           />
           <TouchableOpacity
-            onPress={() => favItem(item)}
+            onPress={() => favItem(item.id)}
             style={[
               styles.bag,
               // {backgroundColor: isFav ? COLORS.gray5 : COLORS.black3},
@@ -185,11 +195,9 @@ export default function HomeScreen({ navigation }) {
         </View>
       </TabCustomHeader>
       <View style={styles.categoryList}>
-        {
-          DATA.map(category => {
-            return <RenderItem item={category} key={category.id} />
-          })
-        }
+        {DATA.map(category => {
+          return <RenderItem item={category} key={category.id} />;
+        })}
         {/* <FlatList
           contentContainerStyle={styles.list}
           data={DATA}
@@ -201,16 +209,17 @@ export default function HomeScreen({ navigation }) {
         /> */}
       </View>
       <View style={styles.productList}>
-        {
-          isLoading ? <Loader /> :
-            <FlatList
-              data={data}
-              renderItem={productList}
-              key={item => item.id}
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-            />
-        }
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={productList}
+            key={item => item.id}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
