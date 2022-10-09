@@ -7,29 +7,32 @@ import CustomButton from '@components/CustomButton';
 import {Formik, Field} from 'formik';
 import {loginValidationSchema} from '@validations/LoginValidation';
 import COLORS from '@constants/Colors';
-import { userLogin } from '@store/api/user';
-import {useMutation} from '@tanstack/react-query'
+import {userLogin} from '@store/api/user';
+import {useMutation} from '@tanstack/react-query';
+import {showMessage} from 'react-native-flash-message';
 
 import Feather from 'react-native-vector-icons/Feather';
 
 export default function LoginScreen({navigation}) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  
-  const loginMutation = useMutation(userLogin, {
-    onError: (error) => {
-      console.log(error)
-    },
-    onSuccess: (data) => {
-      console.log('i was successful');
-      console.log(data);
-      navigation.navigate('Main', { screen: 'Home' })
-    }
-  })
 
-  const handleSubmit = (values) => {
-    const { email, password } = values;
-    loginMutation.mutate({email, password})
-  }
+  const loginMutation = useMutation(userLogin, {
+    onError: error => {
+      showMessage({
+        message: 'Error',
+        description: error.message,
+        type: 'danger',
+      });
+    },
+    onSuccess: data => {
+      navigation.navigate('Main', {screen: 'Home'});
+    },
+  });
+
+  const handleSubmit = values => {
+    const {email, password} = values;
+    loginMutation.mutate({email, password});
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -104,6 +107,7 @@ export default function LoginScreen({navigation}) {
                     {backgroundColor: isValid ? COLORS.black : COLORS.gray},
                   ]}
                   titleStyle={[styles.buttonText, styles.loginText]}
+                  loading={loginMutation.isLoading}
                   handlePress={handleSubmit}
                   disabled={!isValid ? true : false}
                 />

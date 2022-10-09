@@ -1,37 +1,40 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
 import AuthCustomHeader from '@components/AuthCustomHeader';
 import styles from './styles';
 import {Formik, Field} from 'formik';
 import CustomTextInput from '@components/CustomTextInput';
 import CustomButton from '@components/CustomButton';
 import COLORS from '@constants/Colors';
-import { signupValidationSchema } from '@validations/SignupValidation';
-import { useMutation } from '@tanstack/react-query';
-import {userSignUp} from '@store/api/user'
+import {signupValidationSchema} from '@validations/SignupValidation';
+import {useMutation} from '@tanstack/react-query';
+import {userSignUp} from '@store/api/user';
+import {showMessage} from 'react-native-flash-message';
 
 import Feather from 'react-native-vector-icons/Feather';
 
 export default function SignupScreen({navigation}) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  
-  
-  const signUpMutation = useMutation(userSignUp, {
-    onError: (error) => {
-      console.log(error)
-    },
-    onSuccess: (data) => {
-      console.log(data)
-      navigation.navigate('Login')
-    }
-  });
-  
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
-  const handleSignUp = async (values) => {
-    const { name: fullName, email, password } = values;
-    signUpMutation.mutate({fullName, email, password})
-  }
+  const signUpMutation = useMutation(userSignUp, {
+    onError: error => {
+      showMessage({
+        message: 'Error',
+        description: error.message,
+        type: 'danger',
+      });
+    },
+    onSuccess: data => {
+      navigation.navigate('Login');
+    },
+  });
+
+  const handleSignUp = async values => {
+    const {name: fullName, email, password} = values;
+    signUpMutation.mutate({fullName, email, password});
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -138,16 +141,6 @@ export default function SignupScreen({navigation}) {
                   <Text style={styles.errorText}>{errors.confirmPassword}</Text>
                 )}
               </View>
-              {/* {
-                mutation.isError ?
-                  <Text style={styles.errorText}>{ mutation.error.message}</Text> :
-                  null
-              } */}
-              {/* {
-                mutation.isLoading ?
-                  <ActivityIndicator size='small' color='black' /> :
-                  null
-              } */}
               <CustomButton
                 title="SIGN UP"
                 btnStyle={[
@@ -155,6 +148,7 @@ export default function SignupScreen({navigation}) {
                   {backgroundColor: isValid ? COLORS.black : COLORS.gray},
                 ]}
                 titleStyle={[styles.buttonText, styles.signupText]}
+                loading={signUpMutation.isLoading}
                 handlePress={handleSubmit}
                 disabled={!isValid ? true : false}
               />
