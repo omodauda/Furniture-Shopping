@@ -1,20 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {QueryCache} from '@tanstack/react-query';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {useSelector} from 'react-redux';
+import {fetchStorage} from '@store/api/asyncStorage';
 
 //stacks
 import AuthStack from '@navigations/AuthStack';
 import BottomTabNavigator from './BottomTabNavigator';
-import StartupScreen from '@screens/StartUpScreen';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
+  let isAuth;
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await fetchStorage('token');
+      if (!token || token === null) {
+        isAuth = false;
+      } else {
+        isAuth = true;
+      }
+    };
+    fetchToken();
+  }, []);
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="StartUp" component={StartupScreen} />
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName={!isAuth ? 'Auth' : 'Main'}>
       <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Main" component={BottomTabNavigator} />
     </Stack.Navigator>
