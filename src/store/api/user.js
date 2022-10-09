@@ -1,18 +1,21 @@
 import {API_URL} from '@constants/url';
 import {storeData, fetchStorage} from '@store/api/asyncStorage';
+import {requestTimeout} from '@utils/request';
 
 const userSignUp = async ({fullName, email, password}) => {
-  const response = await fetch(`${API_URL}/user/signup`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      fullName,
-      email,
-      password,
+  const response = await requestTimeout(
+    fetch(`${API_URL}/user/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fullName,
+        email,
+        password,
+      }),
     }),
-  });
+  );
   if (!response.ok) {
     const resData = await response.json();
     throw new Error(resData.message);
@@ -22,16 +25,18 @@ const userSignUp = async ({fullName, email, password}) => {
 };
 
 const userLogin = async ({email, password}) => {
-  const response = await fetch(`${API_URL}/user/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password,
+  const response = await requestTimeout(
+    fetch(`${API_URL}/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
     }),
-  });
+  );
   if (!response.ok) {
     const resData = await response.json();
     throw new Error(resData.message);
@@ -43,13 +48,15 @@ const userLogin = async ({email, password}) => {
 
 const userProfile = async () => {
   const token = await fetchStorage('token');
-  const response = await fetch(`${API_URL}/user/profile`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await requestTimeout(
+    fetch(`${API_URL}/user/profile`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  );
   if (!response.ok) {
     const resData = await response.json();
     throw new Error(resData.message);
