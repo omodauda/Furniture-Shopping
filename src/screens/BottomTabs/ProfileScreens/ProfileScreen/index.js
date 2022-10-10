@@ -14,6 +14,8 @@ import {userProfile} from '@store/api/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '@components/Loader';
 import {showMessage} from 'react-native-flash-message';
+import {useDispatch} from 'react-redux';
+import {logout} from '@store/slices/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -49,13 +51,10 @@ export default function ProfileScreen({navigation}) {
 
   const {fullName, email, photo, addresses, orders} = data;
 
+  const dispatch = useDispatch();
   const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem('token');
-      navigation.navigate('Auth', {screen: 'Login'});
-    } catch (error) {
-      console.log(error);
-    }
+    await AsyncStorage.removeItem('token');
+    dispatch(logout());
   };
 
   return (

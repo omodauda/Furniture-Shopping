@@ -1,12 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  name: null,
-  email: null,
-  image: require('@assets/images/users/user1.png'),
-  shippingAddresses: [],
-  paymentMethods: [],
-  reviews: [],
+  isAuth: false,
+  token: null,
 };
 
 export const userSlice = createSlice({
@@ -18,31 +14,41 @@ export const userSlice = createSlice({
       state.name = name;
       state.email = email;
     },
-    addShippingAddress: (state, action) => {
-      const {fullName, address, country, city, postalCode} = action.payload;
-      const newAddress = {
-        id: state.shippingAddresses.length + 1,
-        fullName,
-        address,
-        country,
-        city,
-        postalCode,
-      };
-      state.shippingAddresses.push(newAddress);
+    login: (state, action) => {
+      const {token} = action.payload;
+      state.isAuth = true;
+      state.token = token;
     },
-    addPaymentMethod: (state, action) => {
-      const {name, cardNumber, cvv, expDate} = action.payload;
-      const newPaymentMethod = {
-        id: state.shippingAddresses.length + 1,
-        name,
-        cardNumber,
-        cvv,
-        expDate,
-      };
-      state.paymentMethods.push(newPaymentMethod);
+    logout: (state, action) => {
+      state.isAuth = false;
+      state.token = null;
     },
+    // addShippingAddress: (state, action) => {
+    //   const {fullName, address, country, city, postalCode} = action.payload;
+    //   const newAddress = {
+    //     id: state.shippingAddresses.length + 1,
+    //     fullName,
+    //     address,
+    //     country,
+    //     city,
+    //     postalCode,
+    //   };
+    //   state.shippingAddresses.push(newAddress);
+    // },
+    // addPaymentMethod: (state, action) => {
+    //   const {name, cardNumber, cvv, expDate} = action.payload;
+    //   const newPaymentMethod = {
+    //     id: state.shippingAddresses.length + 1,
+    //     name,
+    //     cardNumber,
+    //     cvv,
+    //     expDate,
+    //   };
+    //   state.paymentMethods.push(newPaymentMethod);
+    // },
   },
 });
 
-export const {signUp, addShippingAddress, addPaymentMethod} = userSlice.actions;
+export const {signUp, login, logout, addShippingAddress, addPaymentMethod} =
+  userSlice.actions;
 export default userSlice.reducer;

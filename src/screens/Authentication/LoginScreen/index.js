@@ -10,22 +10,27 @@ import COLORS from '@constants/Colors';
 import {userLogin} from '@store/api/user';
 import {useMutation} from '@tanstack/react-query';
 import {showMessage} from 'react-native-flash-message';
+import {useDispatch} from 'react-redux';
+import {login} from '@store/slices/user';
 
 import Feather from 'react-native-vector-icons/Feather';
 
 export default function LoginScreen({navigation}) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
   const loginMutation = useMutation(userLogin, {
     onError: error => {
       showMessage({
         message: 'Error',
-        description: error.message,
+        description: error,
         type: 'danger',
       });
     },
     onSuccess: data => {
-      navigation.navigate('Main', {screen: 'Home'});
+      const {token} = data;
+      dispatch(login({token}));
     },
   });
 

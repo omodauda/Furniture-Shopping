@@ -43,7 +43,7 @@ const userLogin = async ({email, password}) => {
   }
   const resData = await response.json();
   await storeData('token', resData.token);
-  return resData.data;
+  return resData;
 };
 
 const userProfile = async () => {

@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from '@navigations/AppNavigator';
 import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 import {store, persistor} from '@store/store';
@@ -20,10 +19,8 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <NavigationContainer>
-          <AppNavigator />
-          <FlashMessage position="top" duration={3000} floating />
-        </NavigationContainer>
+        <AppNavigator />
+        <FlashMessage position="top" duration={3000} floating />
       </Provider>
     </QueryClientProvider>
   );

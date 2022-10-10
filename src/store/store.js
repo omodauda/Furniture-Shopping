@@ -11,12 +11,12 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import productsReducer from './slices/products';
+// import productsReducer from './slices/products';
 import userReducer from './slices/user';
-import notificationReducer from './slices/notification';
-import cartReducer from './slices/cart';
-import favouriteReducer from './slices/favourite';
-import ordersReducer from './slices/orders';
+// import notificationReducer from './slices/notification';
+// import cartReducer from './slices/cart';
+// import favouriteReducer from './slices/favourite';
+// import ordersReducer from './slices/orders';
 
 const persistConfig = {
   key: 'root',
@@ -24,12 +24,11 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  products: productsReducer,
   user: userReducer,
-  notification: notificationReducer,
-  cart: cartReducer,
-  favourite: favouriteReducer,
-  orders: ordersReducer,
+  // notification: notificationReducer,
+  // cart: cartReducer,
+  // favourite: favouriteReducer,
+  // orders: ordersReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
